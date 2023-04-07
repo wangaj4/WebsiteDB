@@ -86,11 +86,11 @@ public class MovieServlet extends HttpServlet {
 
                 String starName = starSet.getString("name");
                 String starId = starSet.getString("id");
-                out.println("<p><a href=\"http://localhost:8080/cs122b_project1_star_example_war/stars?id=" + starId + "\">" + starName + "</a></p>");
+                out.println("<p><a href=\"stars?id=" + starId + "\">" + starName + "</a></p>");
                 while (starSet.next()) {
                     starName = starSet.getString("name");
                     starId = starSet.getString("id");
-                    out.println("<p><a href=\"http://localhost:8080/cs122b_project1_star_example_war/stars?id=" + starId + "\">" + starName + "</a></p>");
+                    out.println("<p><a href=\"stars?id=" + starId + "\">" + starName + "</a></p>");
 
                 }
 
