@@ -5,10 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 // This annotation maps this Java Servlet Class to a URL
 @WebServlet("/stars")
@@ -38,12 +35,13 @@ public class StarServlet extends HttpServlet {
             Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
             // declare statement
 
-            Statement statement = connection.createStatement();
             // prepare query
             String id = request.getParameter("id");
-            String query = "SELECT * from stars WHERE id = '"+id+"'";
+            String query = "SELECT * from stars WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,id);
             // execute query
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
 
 
             out.println("<body>");
@@ -63,9 +61,11 @@ public class StarServlet extends HttpServlet {
 
             //Get all movies that the star is in
             // prepare query
-            String query2 = "SELECT * from stars_in_movies left join movies on movieId = id WHERE starId = '"+id+"' ORDER BY year desc, title";
+            String query2 = "SELECT * from stars_in_movies left join movies on movieId = id WHERE starId = ? ORDER BY year desc, title";
             // execute query
-            ResultSet movieSet = statement.executeQuery(query2);
+            statement = connection.prepareStatement(query2);
+            statement.setString(1,id);
+            ResultSet movieSet = statement.executeQuery();
 
             String movieid = "";
             String moviename = "";

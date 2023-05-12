@@ -52,13 +52,16 @@ public class OrderPage extends HttpServlet {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
-            String query = "SELECT * FROM creditcards left join customers on creditcards.id = customers.ccId WHERE creditcards.firstName = '"+first+"' AND creditcards.lastName = '"+last+"' " +
-                    "AND creditcards.id = '"+num+"' AND expiration = '"+sqlDate+"'";
+            String query = "SELECT * FROM creditcards left join customers on creditcards.id = customers.ccId WHERE creditcards.firstName = ? AND creditcards.lastName = ? " +
+                    "AND creditcards.id = ? AND expiration = ?";
 
             PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery(query);
-            //out.println("<h1>" + query + "</h1>");
-            //If yes:
+            statement.setString(1,first);
+            statement.setString(2,last);
+            statement.setString(3,num);
+            statement.setDate(4,sqlDate);
+            ResultSet resultSet = statement.executeQuery();
+
 
             Boolean notEmpty = false;
             String customerID = "";

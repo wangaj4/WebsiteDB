@@ -21,6 +21,8 @@ import javax.sql.DataSource;
 
 import jakarta.servlet.http.*;
 import jakarta.servlet.RequestDispatcher;
+import org.apache.commons.dbcp2.BasicDataSource;
+
 
 
 
@@ -47,12 +49,6 @@ public class MoviePage extends HttpServlet {
             return;
         }
 
-
-        // Change this to your own mysql username and password
-        String loginUser = "mytestuser";
-        String loginPasswd = "My6$Password";
-        String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
-
         // Set response mime type
         response.setContentType("text/html");
 
@@ -66,15 +62,12 @@ public class MoviePage extends HttpServlet {
 
         try {
 
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            // create database connection
-            Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
-
-            /*
-            Context ctx = new InitialContext();
-            DataSource dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/moviedb");
+            BasicDataSource dataSource = new BasicDataSource();
+            dataSource.setUrl("jdbc:mysql://localhost:3306/moviedb");
+            dataSource.setUsername("mytestuser");
+            dataSource.setPassword("My6$Password");
             Connection connection = dataSource.getConnection();
-            */
+
 
             // Prepare query
 
@@ -130,9 +123,9 @@ public class MoviePage extends HttpServlet {
                 Genre = (String) session.getAttribute("Genre");
             }
             if(Genre != null){
-                query = "SELECT m.id, m.title, m.year, m.director, r.rating FROM movies as m, ratings as r, " +
+                query = "SELECT m.id, m.title, m.year, m.director, r.rating FROM movies m left join ratings r on m.id = r.movieId, " +
                         "genres, genres_in_movies WHERE genres.id = genres_in_movies.genreId " +
-                        "AND genres_in_movies.movieId = m.id AND r.movieId = m.id " +
+                        "AND genres_in_movies.movieId = m.id " +
                         "AND genres.name = '" + Genre + "'";
                 session.setAttribute("Genre", Genre);
                 session.setAttribute("start",null);
@@ -175,7 +168,6 @@ public class MoviePage extends HttpServlet {
             // execute query
             PreparedStatement statement = connection.prepareStatement(query);
 
-        //PRINT QUERY
             //out.println("<h1>" + query + "</h1>");
             ResultSet resultSet = statement.executeQuery(query);
 

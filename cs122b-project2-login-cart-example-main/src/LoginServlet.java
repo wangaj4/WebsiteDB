@@ -1,5 +1,6 @@
 import com.google.gson.JsonObject;
 import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,10 +11,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
@@ -32,6 +32,13 @@ public class LoginServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+        //Check recaptcha
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+
+
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -49,38 +56,75 @@ public class LoginServlet extends HttpServlet {
         String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
 
         try{
+
+
             // Create a new connection to database
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             // create database connection
             Connection dbCon = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
 
             // Declare a new statement
-            Statement statement = dbCon.createStatement();
             // Generate a SQL query
-            String query = String.format("SELECT * from customers where email = '%s'", username);
-
+            //String query = String.format("SELECT * from customers where email = '%s'", username);
+            String query = "SELECT * from customers where email = ?";
+            PreparedStatement statement = dbCon.prepareStatement(query);
+            statement.setString(1,username);
 
             // Log to localhost log
             request.getServletContext().log("query：" + query);
 
+
+
             // Perform the query
-            ResultSet usernames = statement.executeQuery(query);
+            ResultSet usernames = statement.executeQuery();
+
+
 
             Boolean existinguser = false;
-            String correspondingPassword = "a2";
+
+
+            String correspondingPassword = "";
+            Boolean success = false;
+            Boolean employee = false;
             while (usernames.next()){
                 existinguser = true;
+                correspondingPassword = usernames.getString("password");
+                success = new StrongPasswordEncryptor().checkPassword(password, correspondingPassword);
 
             }
+            if (!existinguser){
+                query = "SELECT * from employees where email = ?";
+                statement = dbCon.prepareStatement(query);
+                statement.setString(1,username);
+                ResultSet employeeNames = statement.executeQuery();
+                while (employeeNames.next()){
+                    existinguser = true;
+                    correspondingPassword = employeeNames.getString("password");
+                    success = password.equals(correspondingPassword);
+                    employee = true;
+                }
 
-            if (existinguser && password.equals(correspondingPassword)) {
+            }
+            if (gRecaptchaResponse == null || gRecaptchaResponse.isEmpty()) {
+                responseJsonObject.addProperty("status", "fail");
+                responseJsonObject.addProperty("message", "Input Captcha");
+            }
+
+            else if (existinguser && success) {
                 // Login success:
 
                 // set this user into the session
                 request.getSession().setAttribute("user", new User(username));
 
-                responseJsonObject.addProperty("status", "success");
-                responseJsonObject.addProperty("message", "success");
+                if(employee == true){
+                    responseJsonObject.addProperty("status", "employee");
+                    responseJsonObject.addProperty("message", "employee");
+                }else{
+                    responseJsonObject.addProperty("status", "success");
+                    responseJsonObject.addProperty("message", "success");
+                }
+
+
 
             } else {
                 // Login fail
@@ -100,7 +144,7 @@ public class LoginServlet extends HttpServlet {
             request.getServletContext().log("Error: ", e);
 
             // Output Error Message to html
-            out.println(String.format("<html><head><title>MovieDBExample: Error</title></head>\n<body><p>SQL error in doGet: %s</p></body></html>", e.getMessage()));
+            out.println(String.format("<html><head><title>CAPTCHA: Error</title></head>\n<body><p>SQL error in doGet: %s</p></body></html>", e.getMessage()));
             return;
         }
 

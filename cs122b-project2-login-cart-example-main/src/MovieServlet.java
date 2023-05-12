@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 // This annotation maps this Java Servlet Class to a URL
 @WebServlet("/Movie")
@@ -46,13 +43,14 @@ public class MovieServlet extends HttpServlet {
             // create database connection
             Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
             // declare statement
-            Statement statement = connection.createStatement();
-            String query = "SELECT * from movies left join ratings on id = movieId WHERE id = '"+id+"'";
+            String query = "SELECT * from movies left join ratings on id = movieId WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,id);
 
 
             //Print all info of a movie
             if (id != null) {
-                ResultSet resultSet = statement.executeQuery(query);
+                ResultSet resultSet = statement.executeQuery();
                 resultSet.next();
 
                 out.println("<table border>");
@@ -84,8 +82,10 @@ public class MovieServlet extends HttpServlet {
 
 
                 //Show all stars in the movie
-                String star = "SELECT * FROM stars left join stars_in_movies on id = starId WHERE movieId = '"+id+"' ORDER BY name";
-                ResultSet starSet = statement.executeQuery(star);
+                String star = "SELECT * FROM stars left join stars_in_movies on id = starId WHERE movieId = ? ORDER BY name";
+                statement = connection.prepareStatement(star);
+                statement.setString(1,id);
+                ResultSet starSet = statement.executeQuery();
 
                 out.println("<h2>Stars:</h2>");
                 starSet.next();
@@ -103,8 +103,10 @@ public class MovieServlet extends HttpServlet {
 
 
                 //Show all genres in the movie
-                String genre = "SELECT name FROM genres left join genres_in_movies on id = genreId WHERE movieId = '"+id+"' ORDER BY name";
-                ResultSet genreSet = statement.executeQuery(genre);
+                String genre = "SELECT name FROM genres left join genres_in_movies on id = genreId WHERE movieId = ? ORDER BY name";
+                statement = connection.prepareStatement(genre);
+                statement.setString(1,id);
+                ResultSet genreSet = statement.executeQuery();
                 out.println("<h2>Genres:</h2>");
 
                 genreSet.next();
