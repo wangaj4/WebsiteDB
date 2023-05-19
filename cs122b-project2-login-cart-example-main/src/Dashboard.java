@@ -10,6 +10,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @WebServlet("/Dashboard")
@@ -47,16 +50,27 @@ public class Dashboard extends HttpServlet {
 
             out.println("<h1>Table MetaData:</h1>");
 
+            List<String> existingTables = new ArrayList<String>();
             while (tables.next()) {
                 String tableName = tables.getString("TABLE_NAME");
-                out.println("<h2>" + tableName + "</h2>");
 
+                if(existingTables.contains(tableName)){
+                    continue;
+                }
+                existingTables.add(tableName);
+                out.println("<h2>" + tableName + "</h2>");
                 // Retrieve the column information
                 ResultSet columns = metaData.getColumns(null, null, tableName, null);
 
                 out.println("<ul>");
+                List<String> existingColumns = new ArrayList<String>();
                 while (columns.next()) {
                     String columnName = columns.getString("COLUMN_NAME");
+                    if(existingColumns.contains(columnName)){
+                        continue;
+                    }
+                    existingColumns.add(columnName);
+
                     String columnType = columns.getString("TYPE_NAME");
                     out.println("<li>" + columnName + " (" + columnType + ")</li>");
                 }

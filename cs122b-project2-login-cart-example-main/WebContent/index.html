@@ -2,100 +2,120 @@
 <html lang="en">
 <head>
     <title>Form Example</title>
-    <script src="./index.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- jQuery is required -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- include jquery autocomplete JS  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.11/jquery.autocomplete.min.js"></script>
 </head>
 
 <body BGCOLOR="#FDF5E6">
-<a href="ShoppingCart">Go to Shopping Cart</a>
-<h1 ALIGN="CENTER">Search Movies by Condition</h1>
+    <a href="ShoppingCart">Go to Shopping Cart</a>
 
-<form ALIGN="CENTER" ACTION="MovieList" METHOD="GET">
-    Title: <input TYPE="TEXT" name="Title"><br>
-    Year: <input TYPE="TEXT" name="Year"><br>
-    Director: <input TYPE="TEXT" name="Director"><br>
-    Star's Name: <input TYPE="TEXT" name="Starname"><br>
-    <input TYPE="SUBMIT" VALUE="Search Movie">
+    <h1 ALIGN="CENTER">Main Search Bar</h1>
+    <!--
+    <form ALIGN="CENTER" ACTION="MovieList" METHOD="GET">
+        Title: <input TYPE="TEXT" name="Full" id="autocomplete" >
+        <input TYPE="SUBMIT" VALUE="Full Text Search"></form>
+        -->
 
-</form>
+    <div class="container">
+        <input type="text" name="hero" id="autocomplete"
+               class="autocomplete-searchbox form-control"
+               placeholder="Search Movies"/>
+    </div>
+    <script src="./index.js"></script>
 
 
-<h1 ALIGN="CENTER">Browse Movies by Title</h1>
 
-<h4 ALIGN="CENTER">
-    <a href="MovieList?start=0">| 0 |</a>
-    <a href="MovieList?start=1">1 |</a>
-    <a href="MovieList?start=2">2 |</a>
-    <a href="MovieList?start=3">3 |</a>
-    <a href="MovieList?start=4">4 |</a>
-    <a href="MovieList?start=5">5 |</a>
-    <a href="MovieList?start=6">6 |</a>
-    <a href="MovieList?start=7">7 |</a>
-    <a href="MovieList?start=8">8 |</a>
-    <a href="MovieList?start=9">9 |</a>
-    <a href="MovieList?start=*">* |</a>
-</h4>
+    <h1 ALIGN="CENTER">Search Movies by Condition</h1>
 
-<h4 ALIGN="CENTER">
-    <a href="MovieList?start=A">| A |</a>
-    <a href="MovieList?start=B">B |</a>
-    <a href="MovieList?start=C">C |</a>
-    <a href="MovieList?start=D">D |</a>
-    <a href="MovieList?start=E">E |</a>
-    <a href="MovieList?start=F">F |</a>
-    <a href="MovieList?start=G">G |</a>
-    <a href="MovieList?start=H">H |</a>
-    <a href="MovieList?start=I">I |</a>
-    <a href="MovieList?start=J">J |</a>
-    <a href="MovieList?start=K">K |</a>
-    <a href="MovieList?start=L">L |</a>
-    <a href="MovieList?start=M">M |</a>
-    <a href="MovieList?start=N">N |</a>
-    <a href="MovieList?start=O">O |</a>
-    <a href="MovieList?start=P">P |</a>
-    <a href="MovieList?start=Q">Q |</a>
-    <a href="MovieList?start=R">R |</a>
-    <a href="MovieList?start=S">S |</a>
-    <a href="MovieList?start=U">U |</a>
-    <a href="MovieList?start=V">V |</a>
-    <a href="MovieList?start=W">W |</a>
-    <a href="MovieList?start=X">X |</a>
-    <a href="MovieList?start=Y">Y |</a>
-    <a href="MovieList?start=Z">Z |</a>
-</h4>
+    <form ALIGN="CENTER" ACTION="MovieList" METHOD="GET">
+        Title: <input TYPE="TEXT" name="Title"><br>
+        Year: <input TYPE="TEXT" name="Year"><br>
+        Director: <input TYPE="TEXT" name="Director"><br>
+        Star's Name: <input TYPE="TEXT" name="Starname"><br>
+        <input TYPE="SUBMIT" VALUE="Search Movie">
 
-<h1 ALIGN="CENTER">Browse Movies by Genre</h1>
-<form ALIGN="CENTER" ACTION="MovieList">
-    <label for="Genre">Choose a genre:</label>
-    <select name="Genre" id="Genre">
-        <option value="Action">Action</option>
-        <option value="Adult">Adult</option>
-        <option value="Adventure">Adventure</option>
-        <option value="Animation">Animation</option>
-        <option value="Biography">Biography</option>
-        <option value="Comedy">Comedy</option>
-        <option value="Crime">Crime</option>
-        <option value="Documentary">Documentary</option>
-        <option value="Drama">Drama</option>
-        <option value="Family">Family</option>
-        <option value="Fantasy">Fantasy</option>
-        <option value="Genre1">Genre1</option>
-        <option value="History">History</option>
-        <option value="Horror">Horror</option>
-        <option value="Music">Music</option>
-        <option value="Musical">Musical</option>
-        <option value="Mystery">Mystery</option>
-        <option value="Reality-TV">Reality-TV</option>
-        <option value="Romance">Romance</option>
-        <option value="Sci-Fi">Sci-Fi</option>
-        <option value="Sport">Sport</option>
-        <option value="Thriller">Thriller</option>
-        <option value="War">War</option>
-        <option value="Western">Western</option>
-    </select>
-    <br><br>
-    <input type="submit" value="Submit">
-</form>
+    </form>
 
+
+    <h1 ALIGN="CENTER">Browse Movies by Title</h1>
+
+    <h4 ALIGN="CENTER">
+        <a href="MovieList?start=0">| 0 |</a>
+        <a href="MovieList?start=1">1 |</a>
+        <a href="MovieList?start=2">2 |</a>
+        <a href="MovieList?start=3">3 |</a>
+        <a href="MovieList?start=4">4 |</a>
+        <a href="MovieList?start=5">5 |</a>
+        <a href="MovieList?start=6">6 |</a>
+        <a href="MovieList?start=7">7 |</a>
+        <a href="MovieList?start=8">8 |</a>
+        <a href="MovieList?start=9">9 |</a>
+        <a href="MovieList?start=*">* |</a>
+    </h4>
+
+    <h4 ALIGN="CENTER">
+        <a href="MovieList?start=A">| A |</a>
+        <a href="MovieList?start=B">B |</a>
+        <a href="MovieList?start=C">C |</a>
+        <a href="MovieList?start=D">D |</a>
+        <a href="MovieList?start=E">E |</a>
+        <a href="MovieList?start=F">F |</a>
+        <a href="MovieList?start=G">G |</a>
+        <a href="MovieList?start=H">H |</a>
+        <a href="MovieList?start=I">I |</a>
+        <a href="MovieList?start=J">J |</a>
+        <a href="MovieList?start=K">K |</a>
+        <a href="MovieList?start=L">L |</a>
+        <a href="MovieList?start=M">M |</a>
+        <a href="MovieList?start=N">N |</a>
+        <a href="MovieList?start=O">O |</a>
+        <a href="MovieList?start=P">P |</a>
+        <a href="MovieList?start=Q">Q |</a>
+        <a href="MovieList?start=R">R |</a>
+        <a href="MovieList?start=S">S |</a>
+        <a href="MovieList?start=U">U |</a>
+        <a href="MovieList?start=V">V |</a>
+        <a href="MovieList?start=W">W |</a>
+        <a href="MovieList?start=X">X |</a>
+        <a href="MovieList?start=Y">Y |</a>
+        <a href="MovieList?start=Z">Z |</a>
+    </h4>
+
+    <h1 ALIGN="CENTER">Browse Movies by Genre</h1>
+    <form ALIGN="CENTER" ACTION="MovieList">
+        <label for="Genre">Choose a genre:</label>
+        <select name="Genre" id="Genre">
+            <option value="Action">Action</option>
+            <option value="Adult">Adult</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Animation">Animation</option>
+            <option value="Biography">Biography</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Crime">Crime</option>
+            <option value="Documentary">Documentary</option>
+            <option value="Drama">Drama</option>
+            <option value="Family">Family</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Genre1">Genre1</option>
+            <option value="History">History</option>
+            <option value="Horror">Horror</option>
+            <option value="Music">Music</option>
+            <option value="Musical">Musical</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Reality-TV">Reality-TV</option>
+            <option value="Romance">Romance</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Sport">Sport</option>
+            <option value="Thriller">Thriller</option>
+            <option value="War">War</option>
+            <option value="Western">Western</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
 
 
 </body>

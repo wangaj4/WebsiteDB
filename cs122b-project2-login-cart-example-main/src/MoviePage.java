@@ -45,6 +45,7 @@ public class MoviePage extends HttpServlet {
             session.setAttribute("Title", null);
             session.setAttribute("Director", null);
             session.setAttribute("Year", null);
+            session.setAttribute("Full", null);
             response.sendRedirect("index.html");
             return;
         }
@@ -132,6 +133,29 @@ public class MoviePage extends HttpServlet {
                 session.setAttribute("Title", null);
                 session.setAttribute("Director", null);
                 session.setAttribute("Year", null);
+                session.setAttribute("Full", null);
+            }
+
+
+            //Full text search overrides
+            String Full = request.getParameter("Full");
+            boolean fts = false;
+            String fullTextSearch = "";
+
+            if(Full == null || Full == ""){
+                Full = (String) session.getAttribute("Full");
+            }
+            if(Full != null){
+                //loop over each word in full text search
+                String[] searchTerms = Full.split("\\s+");
+
+                for (String term : searchTerms) {
+                    fullTextSearch += "+" + term + "* ";
+                }
+                query = "SELECT * FROM movies m left join ratings r ON m.id = r.movieId WHERE MATCH(m.title) AGAINST (? IN BOOLEAN MODE)";
+                fts = true;
+                session.setAttribute("Full", Full);
+
             }
 
             out.println("<body>");
@@ -163,13 +187,16 @@ public class MoviePage extends HttpServlet {
                 Page = "0";
             }
 
-            query += " ORDER BY rating DESC limit " + perPage + " OFFSET " + offset;
+            query += " limit " + perPage + " OFFSET " + offset;
 
             // execute query
             PreparedStatement statement = connection.prepareStatement(query);
+            if(fts == true){
+                statement.setString(1,fullTextSearch.trim());
+            }
 
             //out.println("<h1>" + query + "</h1>");
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
 
             out.println("<td><a href=\"MovieList?reset=true\">" + "Back to Movie Search" + "</a></td>");
 

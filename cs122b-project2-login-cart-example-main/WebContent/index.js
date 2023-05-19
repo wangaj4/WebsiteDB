@@ -1,74 +1,104 @@
-let cart = $("#cart");
 
-/**
- * Handle the data returned by IndexServlet
- * @param resultDataString jsonObject, consists of session info
- */
-function handleSessionData(resultDataString) {
-    let resultDataJson = JSON.parse(resultDataString);
+var cached = {};
+function handleLookup(query, doneCallback) {
+    console.log("autocomplete initiated")
 
-    console.log("handle session response");
-    console.log(resultDataJson);
-    console.log(resultDataJson["sessionID"]);
-
-    // show the session information 
-    $("#sessionID").text("Session ID: " + resultDataJson["sessionID"]);
-    $("#lastAccessTime").text("Last access time: " + resultDataJson["lastAccessTime"]);
-
-    // show cart information
-    handleCartArray(resultDataJson["previousItems"]);
-}
-
-/**
- * Handle the items in item list
- * @param resultArray jsonObject, needs to be parsed to html
- */
-function handleCartArray(resultArray) {
-    console.log(resultArray);
-    let item_list = $("#item_list");
-    // change it to html list
-    let res = "<ul>";
-    for (let i = 0; i < resultArray.length; i++) {
-        // each item will be in a bullet point
-        res += "<li>" + resultArray[i] + "</li>";
+    // TODO: if you want to check past query results first, you can do it here
+    if(cached.hasOwnProperty(query)){
+        console.log("Getting cached query results")
+        var data = cached[query];
+        handleLookupAjaxSuccess(data, query, doneCallback)
+        return;
+    }else{
+        console.log("sending AJAX request to backend Java Servlet")
     }
-    res += "</ul>";
-
-    // clear the old array and show the new array in the frontend
-    item_list.html("");
-    item_list.append(res);
-}
-
-/**
- * Submit form content with POST method
- * @param cartEvent
- */
-function handleCartInfo(cartEvent) {
-    console.log("submit cart form");
-    /**
-     * When users click the submit button, the browser will not direct
-     * users to the url defined in HTML form. Instead, it will call this
-     * event handler when the event is triggered.
-     */
-    cartEvent.preventDefault();
-
-    $.ajax("api/index", {
-        method: "POST",
-        data: cart.serialize(),
-        success: resultDataString => {
-            let resultDataJson = JSON.parse(resultDataString);
-            handleCartArray(resultDataJson["previousItems"]);
+    // sending the HTTP GET request to the Java Servlet endpoint auto-suggestion
+    // with the query data
+    jQuery.ajax({
+        "method": "GET",
+        // generate the request url from the query.
+        // escape the query string to avoid errors caused by special characters
+        "url": "auto-suggestion?query=" + escape(query),
+        "success": function(data) {
+            // pass the data, query, and doneCallback function into the success handler
+            handleLookupAjaxSuccess(data, query, doneCallback)
+        },
+        "error": function(errorData) {
+            console.log("lookup ajax error")
+            console.log(errorData)
         }
-    });
-
-    // clear input form
-    cart[0].reset();
+    })
 }
 
-$.ajax("api/index", {
-    method: "GET",
-    success: handleSessionData
+function handleLookupAjaxSuccess(data, query, doneCallback) {
+    //cache the result into a global variable
+    cached[query] = data;
+
+    // parse the string into JSON
+    var jsonData = JSON.parse(data);
+    console.log(jsonData)
+
+
+
+    // call the callback function provided by the autocomplete library
+    // add "{suggestions: jsonData}" to satisfy the library response format according to
+    //   the "Response Format" section in documentation
+    doneCallback( { suggestions: jsonData } );
+}
+
+
+/*
+ * This function is the select suggestion handler function.
+ * When a suggestion is selected, this function is called by the library.
+ *
+ * You can redirect to the page you want using the suggestion data.
+ */
+function handleSelectSuggestion(suggestion) {
+    //jump to the specific result page based on the selected suggestion
+    let currentPath = window.location.pathname;
+    if (currentPath.endsWith("/index.html")) {
+        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
+    }
+    let address = currentPath + "Movie?id=" + suggestion["data"]["id"];
+    window.location.href = address;
+}
+
+// $('#autocomplete') is to find element by the ID "autocomplete"
+$('#autocomplete').autocomplete({
+    lookup: function (query, doneCallback) {
+        handleLookup(query, doneCallback)
+    },
+    onSelect: function(suggestion) {
+        handleSelectSuggestion(suggestion)
+    },
+    // set delay time and minimum characters
+    deferRequestBy: 300,
+    minChars: 3,
 });
 
-// Bind the submit action of the form to a event handler function
-cart.submit(handleCartInfo);
+
+/*
+ * do normal full text search if no suggestion is selected
+ */
+function handleNormalSearch(query) {
+    //you should do normal search here
+    let currentPath = window.location.pathname;
+    if (currentPath.endsWith("/index.html")) {
+        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
+    }
+    let address = currentPath + "MovieList?Full=" + query;
+    window.location.href = address;
+
+}
+
+// bind pressing enter key to a handler function
+$('#autocomplete').keypress(function(event) {
+    // keyCode 13 is the enter key
+    if (event.keyCode == 13) {
+        // pass the value of the input box to the handler function
+        handleNormalSearch($('#autocomplete').val())
+    }
+})
+
+
+
