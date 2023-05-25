@@ -105,14 +105,13 @@ public class LoginServlet extends HttpServlet {
                 }
 
             }
-            if (gRecaptchaResponse == null || gRecaptchaResponse.isEmpty()) {
-                responseJsonObject.addProperty("status", "fail");
-                responseJsonObject.addProperty("message", "Input Captcha");
-            }
+//            if (gRecaptchaResponse == null || gRecaptchaResponse.isEmpty()) {
+//                responseJsonObject.addProperty("status", "fail");
+//                responseJsonObject.addProperty("message", "Input Captcha");
+//            }
 
-            else if (existinguser && success) {
+            if (existinguser && success) {
                 // Login success:
-
                 // set this user into the session
                 request.getSession().setAttribute("user", new User(username));
 
