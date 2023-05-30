@@ -1,9 +1,13 @@
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -26,11 +30,17 @@ public class Dashboard extends HttpServlet {
     String genreid = "";
     String starid = "";
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public DataSource dataSource;
 
-        String loginUser = "mytestuser";
-        String loginPasswd = "My6$Password";
-        String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
+    public void init(ServletConfig config) {
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Set response mime type
         response.setContentType("text/html");
@@ -44,7 +54,7 @@ public class Dashboard extends HttpServlet {
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             // create database connection
-            Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
+            Connection connection = dataSource.getConnection();
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet tables = metaData.getTables(null, null, null, new String[] {"TABLE"});
 

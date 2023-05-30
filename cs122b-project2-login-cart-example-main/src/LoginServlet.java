@@ -37,8 +37,6 @@ public class LoginServlet extends HttpServlet {
         //Check recaptcha
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
 
-
-
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -51,17 +49,13 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         JsonObject responseJsonObject = new JsonObject();
 
-        String loginUser = "mytestuser";
-        String loginPasswd = "My6$Password";
-        String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
-
         try{
 
 
             // Create a new connection to database
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             // create database connection
-            Connection dbCon = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
+            Connection dbCon = dataSource.getConnection();
 
             // Declare a new statement
             // Generate a SQL query

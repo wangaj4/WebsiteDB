@@ -1,9 +1,13 @@
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -20,6 +24,16 @@ import java.util.Calendar;
 @WebServlet("/Order")
 public class OrderPage extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    public DataSource dataSource;
+
+    public void init(ServletConfig config) {
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -46,12 +60,8 @@ public class OrderPage extends HttpServlet {
             java.util.Date date = dateFormat.parse(dateString);
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
-            String loginUser = "mytestuser";
-            String loginPasswd = "My6$Password";
-            String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
-
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
+            Connection connection = dataSource.getConnection();
             String query = "SELECT * FROM creditcards left join customers on creditcards.id = customers.ccId WHERE creditcards.firstName = ? AND creditcards.lastName = ? " +
                     "AND creditcards.id = ? AND expiration = ?";
 

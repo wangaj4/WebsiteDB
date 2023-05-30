@@ -5,21 +5,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import java.util.Map;
-import java.util.HashMap;
-
 
 @WebServlet(name = "MovieListAPI", urlPatterns = "/api/list")
 public class MovieListAPI extends HttpServlet {
@@ -34,23 +26,13 @@ public class MovieListAPI extends HttpServlet {
         }
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response){
 
         String entry = request.getParameter("Full");
         String page = request.getParameter("Page");
 
-        /* This example only allows username/password to be test/test
-        /  in the real project, you should talk to the database to verify username/password
-        */
-        response.setContentType("text/html");    // Response mime type
 
-        // Output stream to STDOUT
-        PrintWriter out = response.getWriter();
         JsonObject responseJsonObject = new JsonObject();
-
-        String loginUser = "mytestuser";
-        String loginPasswd = "My6$Password";
-        String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
 
         try {
 
@@ -58,7 +40,7 @@ public class MovieListAPI extends HttpServlet {
             // Create a new connection to database
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             // create database connection
-            Connection dbCon = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
+            Connection dbCon = dataSource.getConnection();
 
             String[] searchTerms = entry.split("\\s+");
             String fullTextSearch = "";
