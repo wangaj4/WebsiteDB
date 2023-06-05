@@ -332,7 +332,10 @@ public class MoviePage extends HttpServlet{
 
             String filePath = "/home/ubuntu/output.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-            writer.write("Hello, world!");
+            writer.write("\nTS: " + elapsedTimeTS);
+            writer.write("\nTJ: " + elapsedTimeTJ);
+            writer.flush();
+            writer.close();
 
         } catch (Exception e) {
 
