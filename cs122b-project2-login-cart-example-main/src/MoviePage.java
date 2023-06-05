@@ -23,29 +23,14 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.RequestDispatcher;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import javax.servlet.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 
 // This annotation maps this Java Servlet Class to a URL
 @WebServlet("/MovieList")
 public class MoviePage extends HttpServlet{
     private static final long serialVersionUID = 1L;
-    private static final Logger logger = Logger.getLogger(MoviePage.class.getName());
-    private static FileHandler fileHandler;
-    public void init() {
-        try {
-            // Configure the file handler for logging to a file
-            fileHandler = new FileHandler("/home/ubuntu/log_file.txt", true);
-            fileHandler.setFormatter(new SimpleFormatter());
-            logger.addHandler(fileHandler);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to initialize logging", e);
-        }
-    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -344,9 +329,15 @@ public class MoviePage extends HttpServlet{
 
             long endTimeTS = System.nanoTime();
             long elapsedTimeTS = endTimeTS - startTimeTS;
-            logger.log(Level.INFO, "Search servlet total execution time (TS): {0} nanoseconds", elapsedTimeTS);
-            logger.log(Level.INFO, "\nJDBC execution time (TJ): {0} nanoseconds", elapsedTimeTJ);
 
+            String filePath = "/home/ubuntu/output.txt";
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                writer.write("Hello, world!");
+                // Write more content to the file as needed
+            } catch (IOException e) {
+                // Handle any exceptions that occur during file writing
+                e.printStackTrace();
+            }
         } catch (Exception e) {
 
             request.getServletContext().log("Error: ", e);
