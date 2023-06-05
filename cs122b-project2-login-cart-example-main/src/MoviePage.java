@@ -23,19 +23,32 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.RequestDispatcher;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-
-
-
-
-
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import javax.servlet.*;
 
 
 // This annotation maps this Java Servlet Class to a URL
 @WebServlet("/MovieList")
-public class MoviePage extends HttpServlet {
+public class MoviePage extends HttpServlet{
     private static final long serialVersionUID = 1L;
+    private static final Logger logger = Logger.getLogger(MoviePage.class.getName());
+    private static FileHandler fileHandler;
+    public void init() {
+        try {
+            // Configure the file handler for logging to a file
+            fileHandler = new FileHandler("/home/ubuntu/log_file.txt", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Failed to initialize logging", e);
+        }
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
 
         HttpSession session = request.getSession();
         if (request.getParameter("reset") != null && request.getParameter("reset").equals("true")){
@@ -49,6 +62,7 @@ public class MoviePage extends HttpServlet {
             response.sendRedirect("index.html");
             return;
         }
+        long startTimeTS = System.nanoTime();
 
         // Set response mime type
         response.setContentType("text/html");
@@ -196,7 +210,11 @@ public class MoviePage extends HttpServlet {
             }
 
             //out.println("<h1>" + query + "</h1>");
+
+            long startTimeTJ = System.nanoTime();
             ResultSet resultSet = statement.executeQuery();
+            long endTimeTJ = System.nanoTime();
+            long elapsedTimeTJ = endTimeTJ - startTimeTJ; // elapsed time in nano seconds. Note: print the values in nanoseconds
 
             out.println("<td><a href=\"MovieList?reset=true\">" + "Back to Movie Search" + "</a></td>");
 
@@ -324,6 +342,11 @@ public class MoviePage extends HttpServlet {
             statement.close();
             connection.close();
 
+            long endTimeTS = System.nanoTime();
+            long elapsedTimeTS = endTimeTS - startTimeTS;
+            logger.log(Level.INFO, "Search servlet total execution time (TS): {0} nanoseconds", elapsedTimeTS);
+            logger.log(Level.INFO, "\nJDBC execution time (TJ): {0} nanoseconds", elapsedTimeTJ);
+
         } catch (Exception e) {
 
             request.getServletContext().log("Error: ", e);
@@ -336,6 +359,8 @@ public class MoviePage extends HttpServlet {
         }
 
         out.println("</html>");
+
+
         out.close();
 
     }
