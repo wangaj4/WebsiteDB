@@ -331,13 +331,9 @@ public class MoviePage extends HttpServlet{
             long elapsedTimeTS = endTimeTS - startTimeTS;
 
             String filePath = "/home/ubuntu/output.txt";
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-                writer.write("Hello, world!");
-                // Write more content to the file as needed
-            } catch (IOException e) {
-                // Handle any exceptions that occur during file writing
-                e.printStackTrace();
-            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+            writer.write("Hello, world!");
+
         } catch (Exception e) {
 
             request.getServletContext().log("Error: ", e);
