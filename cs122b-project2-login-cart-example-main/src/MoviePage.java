@@ -34,7 +34,7 @@ public class MoviePage extends HttpServlet{
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-
+        long startTimeTS = System.nanoTime();
         HttpSession session = request.getSession();
         if (request.getParameter("reset") != null && request.getParameter("reset").equals("true")){
             session.setAttribute("page", null);
@@ -47,7 +47,7 @@ public class MoviePage extends HttpServlet{
             response.sendRedirect("index.html");
             return;
         }
-        long startTimeTS = System.nanoTime();
+
 
         // Set response mime type
         response.setContentType("text/html");
@@ -201,6 +201,8 @@ public class MoviePage extends HttpServlet{
             long endTimeTJ = System.nanoTime();
             long elapsedTimeTJ = endTimeTJ - startTimeTJ; // elapsed time in nano seconds. Note: print the values in nanoseconds
 
+            long endTimeTS = System.nanoTime();
+            long elapsedTimeTS = endTimeTS - startTimeTS;
             out.println("<td><a href=\"MovieList?reset=true\">" + "Back to Movie Search" + "</a></td>");
 
             out.println("<h1>Found Movies</h1>");
@@ -327,13 +329,12 @@ public class MoviePage extends HttpServlet{
             statement.close();
             connection.close();
 
-            long endTimeTS = System.nanoTime();
-            long elapsedTimeTS = endTimeTS - startTimeTS;
 
-            String filePath = "/home/ubuntu/output.txt";
+
+            String filePath = "/var/lib/tomcat10/output.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-            writer.write("\nTS: " + elapsedTimeTS);
-            writer.write("\nTJ: " + elapsedTimeTJ);
+            writer.write("TS: " + elapsedTimeTS + "\n");
+            writer.write("TJ: " + elapsedTimeTJ + "\n");
             writer.flush();
             writer.close();
 
