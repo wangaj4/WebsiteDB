@@ -33,7 +33,7 @@ public class LoginFilter implements Filter {
         if (httpRequest.getSession().getAttribute("user") == null) {
             //TODO: temporary disable login filter
             chain.doFilter(request, response);
-            httpResponse.sendRedirect("login.html");
+            //httpResponse.sendRedirect("login.html");
         } else {
             chain.doFilter(request, response);
         }
