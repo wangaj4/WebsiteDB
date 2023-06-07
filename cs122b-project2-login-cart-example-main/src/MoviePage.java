@@ -331,8 +331,8 @@ public class MoviePage extends HttpServlet{
 
 
 
-            String filePath = "/var/lib/tomcat10/output.txt";
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+            String filePath = "/var/lib/tomcat10/logs/output.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
             writer.write("TS: " + elapsedTimeTS + "\n");
             writer.write("TJ: " + elapsedTimeTJ + "\n");
             writer.flush();
