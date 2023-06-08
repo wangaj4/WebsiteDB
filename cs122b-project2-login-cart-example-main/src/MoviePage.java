@@ -255,6 +255,7 @@ public class MoviePage extends HttpServlet{
 
             int onpage = 0;
 
+            /*
             //Get genres from database
             Map<String, List<List<String>>> movieGenresMap = new HashMap<>();
             String genre = "SELECT * FROM genres_in_movies LEFT JOIN genres on genres.id = genres_in_movies.genreId WHERE TRUE";
@@ -296,7 +297,7 @@ public class MoviePage extends HttpServlet{
                 s.add(starName);
                 movieStarsMap.get(movieId).add(s);
             }
-
+*/
             // Add a row for every movie result
             while (resultSet.next()) {
                 onpage += 1;
@@ -312,7 +313,7 @@ public class MoviePage extends HttpServlet{
                 out.println("<td>" + year + "</td>");
                 out.println("<td>" + director + "</td>");
 
-
+/*
                 //Find first three genres
 
                 out.println("<td>");
@@ -339,7 +340,7 @@ public class MoviePage extends HttpServlet{
                     index+=1;
                 }
                 out.println("</td>");
-
+*/
 
                 out.println("<td>" + rating + "</td>");
                 out.println("</tr>");
@@ -365,6 +366,8 @@ public class MoviePage extends HttpServlet{
 
 
             resultSet.close();
+            //genreSet.close();
+            //starSet.close();
             statement.close();
             connection.close();
 
