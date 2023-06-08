@@ -1,3 +1,4 @@
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 import javax.naming.InitialContext;
 import javax.naming.Context;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
 
@@ -31,6 +33,15 @@ import java.io.FileWriter;
 @WebServlet("/MovieList")
 public class MoviePage extends HttpServlet{
     private static final long serialVersionUID = 1L;
+
+    public DataSource dataSource;
+    public void init(ServletConfig config) {
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -62,10 +73,6 @@ public class MoviePage extends HttpServlet{
 
         try {
 
-            BasicDataSource dataSource = new BasicDataSource();
-            dataSource.setUrl("jdbc:mysql://localhost:3306/moviedb");
-            dataSource.setUsername("mytestuser");
-            dataSource.setPassword("My6$Password");
             Connection connection = dataSource.getConnection();
 
 
@@ -201,8 +208,7 @@ public class MoviePage extends HttpServlet{
             long endTimeTJ = System.nanoTime();
             long elapsedTimeTJ = endTimeTJ - startTimeTJ; // elapsed time in nano seconds. Note: print the values in nanoseconds
 
-            long endTimeTS = System.nanoTime();
-            long elapsedTimeTS = endTimeTS - startTimeTS;
+
             out.println("<td><a href=\"MovieList?reset=true\">" + "Back to Movie Search" + "</a></td>");
 
             out.println("<h1>Found Movies</h1>");
@@ -237,8 +243,8 @@ public class MoviePage extends HttpServlet{
                 out.println("<td>Title</a></td>");
                 out.println("<td>Year</td>");
                 out.println("<td>Director</td>");
-                out.println("<td>Genres</td>");
-                out.println("<td>Stars</td>");
+                //out.println("<td>Genres</td>");
+                //out.println("<td>Stars</td>");
                 out.println("<td>Rating</td>");
                 out.println("</tr>");
             }
@@ -260,6 +266,7 @@ public class MoviePage extends HttpServlet{
                 out.println("<td>" + director + "</td>");
 
                 //Find first three genres
+                /*
                 String genre = "SELECT name FROM genres left join genres_in_movies on id = genreId WHERE movieId = '"+movieid+"' order by name limit 3";
 
                 statement = connection.prepareStatement(genre);
@@ -300,7 +307,7 @@ public class MoviePage extends HttpServlet{
 
                 out.println("</td>");
 
-
+                */
 
                 out.println("<td>" + rating + "</td>");
                 out.println("</tr>");
@@ -329,6 +336,8 @@ public class MoviePage extends HttpServlet{
             statement.close();
             connection.close();
 
+            long endTimeTS = System.nanoTime();
+            long elapsedTimeTS = endTimeTS - startTimeTS;
 
 
             String filePath = "/var/lib/tomcat10/logs/output.txt";
