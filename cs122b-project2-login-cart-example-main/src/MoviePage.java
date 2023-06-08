@@ -27,6 +27,10 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+
 
 
 // This annotation maps this Java Servlet Class to a URL
@@ -243,13 +247,56 @@ public class MoviePage extends HttpServlet{
                 out.println("<td>Title</a></td>");
                 out.println("<td>Year</td>");
                 out.println("<td>Director</td>");
-                //out.println("<td>Genres</td>");
+                out.println("<td>Genres</td>");
                 //out.println("<td>Stars</td>");
                 out.println("<td>Rating</td>");
                 out.println("</tr>");
             }
 
             int onpage = 0;
+
+            //Get genres from database
+            Map<String, List<List<String>>> movieGenresMap = new HashMap<>();
+            String genre = "SELECT * FROM genres_in_movies LEFT JOIN genres on genres.id = genres_in_movies.genreId WHERE TRUE";
+
+            statement = connection.prepareStatement(genre);
+            ResultSet genreSet = statement.executeQuery();
+
+            while (genreSet.next()){
+                String movieId = genreSet.getString("movieId");
+                int genreId = genreSet.getInt("genreId");
+                String genreName = genreSet.getString("name");
+
+                if (!movieGenresMap.containsKey(movieId)) {
+                    movieGenresMap.put(movieId, new ArrayList<>());
+                }
+                List<String> g = new ArrayList<>();
+                g.add(Integer.toString(genreId));
+                g.add(genreName);
+                movieGenresMap.get(movieId).add(g);
+            }
+
+            //Get stars from database
+            Map<String, List<List<String>>> movieStarsMap = new HashMap<>();
+            String star = "SELECT * FROM stars_in_movies LEFT JOIN stars on stars.id = stars_in_movies.starId WHERE TRUE";
+
+            statement = connection.prepareStatement(star);
+            ResultSet starSet = statement.executeQuery();
+
+            while (starSet.next()){
+                String movieId = starSet.getString("movieId");
+                String starId = starSet.getString("starId");
+                String starName = starSet.getString("name");
+
+                if (!movieStarsMap.containsKey(movieId)) {
+                    movieStarsMap.put(movieId, new ArrayList<>());
+                }
+                List<String> s = new ArrayList<>();
+                s.add((starId));
+                s.add(starName);
+                movieStarsMap.get(movieId).add(s);
+            }
+
             // Add a row for every movie result
             while (resultSet.next()) {
                 onpage += 1;
@@ -265,49 +312,34 @@ public class MoviePage extends HttpServlet{
                 out.println("<td>" + year + "</td>");
                 out.println("<td>" + director + "</td>");
 
+
                 //Find first three genres
-                /*
-                String genre = "SELECT name FROM genres left join genres_in_movies on id = genreId WHERE movieId = '"+movieid+"' order by name limit 3";
-
-                statement = connection.prepareStatement(genre);
-                ResultSet genreSet = statement.executeQuery(genre);
 
                 out.println("<td>");
-
-                genreSet.next();
-                String genreString = genreSet.getString("name");
-                out.println("<a href=\"MovieList?Genre=" + genreString + "\">" + genreString + "</a>");
-                while (genreSet.next()) {
-                    genreString = genreSet.getString("name");
-                    out.println(", <a href=\"MovieList?Genre=" + genreString + "\">" + genreString + "</a>");
+                int index = 0;
+                for (List<String> x : movieGenresMap.get(movieid)){
+                    if (index != 0) {
+                        out.println(",");
+                    }
+                    out.println("<a href=\"MovieList?Genre=" + x.get(0) + "\">" + x.get(1) + "</a>");
+                    index+=1;
                 }
-                genreSet.close();
                 out.println("</td>");
 
-                //Find first three stars
-                String star = "SELECT * FROM stars left join stars_in_movies on id = starId WHERE movieId = '"+movieid+"' order by name limit 3";
-
-                statement = connection.prepareStatement(star);
-                ResultSet starSet = statement.executeQuery(star);
-
-
-                starSet.next();
-                String starString = starSet.getString("name");
-                String starid = starSet.getString("starId");
                 out.println("<td>");
-                out.println("<a href=\"stars?id=" + starid + "\">" + starString + "</a>");
-                while (starSet.next()){
-                    starString = starSet.getString("name");
-                    starid = starSet.getString("starId");
-                    out.println(",");
-                    out.println("<a href=\"stars?id=" + starid + "\">" + starString + "</a>");
-
-
+                index = 0;
+                for (List<String> x : movieStarsMap.get(movieid)){
+                    if (index != 0) {
+                        out.println(",");
+                    }
+                    if(index==3){
+                        break;
+                    }
+                    out.println("<a href=\"stars?id=" + x.get(0) + "\">" + x.get(1) + "</a>");
+                    index+=1;
                 }
-
                 out.println("</td>");
 
-                */
 
                 out.println("<td>" + rating + "</td>");
                 out.println("</tr>");
