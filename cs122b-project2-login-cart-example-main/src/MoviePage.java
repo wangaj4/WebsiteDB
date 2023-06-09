@@ -77,14 +77,7 @@ public class MoviePage extends HttpServlet{
 
         try {
 
-            //Connection connection = dataSource.getConnection();
-            String loginUser = "mytestuser";
-            String loginPasswd = "My6$Password";
-            String loginUrl = "jdbc:mysql://localhost:3306/moviedbexample";
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            // create database connection
-            Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
-
+            Connection connection = dataSource.getConnection();
             // Prepare query
 
             //String query = "SELECT * from movies left join ratings on id = movieId ORDER BY rating DESC limit 20";
