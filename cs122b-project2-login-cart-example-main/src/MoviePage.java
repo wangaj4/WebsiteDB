@@ -311,7 +311,7 @@ public class MoviePage extends HttpServlet{
                 out.println("<td>" + year + "</td>");
                 out.println("<td>" + director + "</td>");
 
-/*
+
                 //Find first three genres
 
                 out.println("<td>");
@@ -338,7 +338,7 @@ public class MoviePage extends HttpServlet{
                     index+=1;
                 }
                 out.println("</td>");
-*/
+
 
                 out.println("<td>" + rating + "</td>");
                 out.println("</tr>");
