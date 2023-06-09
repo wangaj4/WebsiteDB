@@ -77,8 +77,13 @@ public class MoviePage extends HttpServlet{
 
         try {
 
-            Connection connection = dataSource.getConnection();
-
+            //Connection connection = dataSource.getConnection();
+            String loginUser = "mytestuser";
+            String loginPasswd = "My6$Password";
+            String loginUrl = "jdbc:mysql://localhost:3306/moviedbexample";
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            // create database connection
+            Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
 
             // Prepare query
 
