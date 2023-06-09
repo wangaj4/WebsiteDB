@@ -245,8 +245,8 @@ public class MoviePage extends HttpServlet{
                 out.println("<td>Title</a></td>");
                 out.println("<td>Year</td>");
                 out.println("<td>Director</td>");
-                //out.println("<td>Genres</td>");
-                //out.println("<td>Stars</td>");
+                out.println("<td>Genres</td>");
+                out.println("<td>Stars</td>");
                 out.println("<td>Rating</td>");
                 out.println("</tr>");
             }
