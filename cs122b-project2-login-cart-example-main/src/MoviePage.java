@@ -253,7 +253,7 @@ public class MoviePage extends HttpServlet{
 
             int onpage = 0;
 
-            /*
+
             //Get genres from database
             Map<String, List<List<String>>> movieGenresMap = new HashMap<>();
             String genre = "SELECT * FROM genres_in_movies LEFT JOIN genres on genres.id = genres_in_movies.genreId WHERE TRUE";
@@ -295,7 +295,7 @@ public class MoviePage extends HttpServlet{
                 s.add(starName);
                 movieStarsMap.get(movieId).add(s);
             }
-*/
+
             // Add a row for every movie result
             while (resultSet.next()) {
                 onpage += 1;

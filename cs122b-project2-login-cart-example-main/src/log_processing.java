@@ -27,10 +27,12 @@ public class log_processing {
 
         if (totalSamples > 0) {
             double averageTS = (double) totalTS / totalSamples;
+            double TSmilliseconds = averageTS/1000000;
             double averageTJ = (double) totalTJ / totalSamples;
+            double TJmilliseconds = averageTJ/1000000;
 
-            System.out.println("Average TS: " + averageTS);
-            System.out.println("Average TJ: " + averageTJ);
+            System.out.println("Average TS: " + TSmilliseconds + " milliseconds");
+            System.out.println("Average TJ: " + TJmilliseconds + " milliseconds");
         }
     }
 }
