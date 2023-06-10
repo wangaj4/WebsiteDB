@@ -364,8 +364,8 @@ public class MoviePage extends HttpServlet{
 
 
             resultSet.close();
-            //genreSet.close();
-            //starSet.close();
+            genreSet.close();
+            starSet.close();
             statement.close();
             connection.close();
 
