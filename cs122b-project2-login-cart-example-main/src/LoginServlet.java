@@ -57,6 +57,14 @@ public class LoginServlet extends HttpServlet {
             // create database connection
             Connection dbCon = dataSource.getConnection();
 
+
+            if (gRecaptchaResponse == null || gRecaptchaResponse.isEmpty()) {
+                responseJsonObject.addProperty("status", "fail");
+                responseJsonObject.addProperty("message", "Input Captcha");
+                response.getWriter().write(responseJsonObject.toString());
+                return;
+            }
+
             // Declare a new statement
             // Generate a SQL query
             //String query = String.format("SELECT * from customers where email = '%s'", username);
@@ -99,10 +107,7 @@ public class LoginServlet extends HttpServlet {
                 }
 
             }
-//            if (gRecaptchaResponse == null || gRecaptchaResponse.isEmpty()) {
-//                responseJsonObject.addProperty("status", "fail");
-//                responseJsonObject.addProperty("message", "Input Captcha");
-//            }
+
 
             if (existinguser && success) {
                 // Login success:

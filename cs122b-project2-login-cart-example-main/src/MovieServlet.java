@@ -44,7 +44,7 @@ public class MovieServlet extends HttpServlet {
 
 
         try {
-            out.println("<td><a href=\"MovieList\">" + "Back to Movie List" + "</a>");
+            out.println("<td><a href=\"MovieList\">" + "Back to Results" + "</a>");
             out.println("<P align = \"right\"><a href=\"ShoppingCart\">" + "Proceed to Cart" + "</a></P align = \"right\"></td>");
             out.println("<p></p>");
 

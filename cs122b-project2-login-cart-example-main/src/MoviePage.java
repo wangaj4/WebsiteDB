@@ -369,16 +369,7 @@ public class MoviePage extends HttpServlet{
             statement.close();
             connection.close();
 
-            long endTimeTS = System.nanoTime();
-            long elapsedTimeTS = endTimeTS - startTimeTS;
 
-
-            String filePath = "/var/lib/tomcat10/logs/output.txt";
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
-            writer.write("TS: " + elapsedTimeTS + "\n");
-            writer.write("TJ: " + elapsedTimeTJ + "\n");
-            writer.flush();
-            writer.close();
 
         } catch (Exception e) {
 
