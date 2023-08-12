@@ -12,13 +12,15 @@ html, body {
 }
 
 .cover{
+    position:relative;
     min-height: 100%;
     background: linear-gradient(to bottom right, lightskyblue, #272343);
     transition: all 0.7s;
 }
 
 .cover-dark{
-    background: linear-gradient(to bottom left, darkslateblue, #272343);
+    background: linear-gradient(to bottom left, #2a2a2a, #151515);
+    color:whitesmoke;
 }
 
 
@@ -35,6 +37,11 @@ html, body {
     justify-content: space-between;
     align-items: center;
     padding: 0 2%;
+    transition: all 0.7s;
+}
+
+.dark-navbar{
+    background-color: #323232;
 }
 
 .navbar-spacer{
@@ -47,17 +54,37 @@ html, body {
     color:#272343;
     border-radius: 3rem;
     cursor:pointer;
-    padding:2% 8%;
+    padding: 1.2rem 4rem;
     font-weight:700;
     font-size: 2rem;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.25s;
 }
 
 .cart-button:hover {
-    background-color: #0056b3;
+    background-color: deepskyblue;
 }
 
-#toggle{
+.toggle{
+    border-radius: 3rem;
+    background-color:#e3f6f5;
+    color:#272343;
+    border: none;
+    padding: 1.2rem 4rem;
+    cursor: pointer;
+    margin-right:4rem;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.25s;
 
+}
+
+.toggle:hover{
+    background-color:lightskyblue;
+}
+
+.dark-buttons{
+    background-color:#3d3d3d;
+    color:whitesmoke;
 }
 
 

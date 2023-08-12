@@ -1,104 +1,21 @@
 
-var cached = {};
-function handleLookup(query, doneCallback) {
-    console.log("autocomplete initiated")
 
-    // TODO: if you want to check past query results first, you can do it here
-    if(cached.hasOwnProperty(query)){
-        console.log("Getting cached query results")
-        var data = cached[query];
-        handleLookupAjaxSuccess(data, query, doneCallback)
-        return;
-    }else{
-        console.log("sending AJAX request to backend Java Servlet")
-    }
-    // sending the HTTP GET request to the Java Servlet endpoint auto-suggestion
-    // with the query data
-    jQuery.ajax({
-        "method": "GET",
-        // generate the request url from the query.
-        // escape the query string to avoid errors caused by special characters
-        "url": "auto-suggestion?query=" + escape(query),
-        "success": function(data) {
-            // pass the data, query, and doneCallback function into the success handler
-            handleLookupAjaxSuccess(data, query, doneCallback)
-        },
-        "error": function(errorData) {
-            console.log("lookup ajax error")
-            console.log(errorData)
+$(document).ready(function() {
+
+    $('.toggle').click(function() {
+
+        const cover = document.getElementById('back');
+        const cartButton = document.getElementById('cart');
+        const navbar = document.getElementById('navbar');
+
+        if (cover.classList.contains("cover-dark")){
+            cover.classList.remove("cover-dark");
+            cartButton.classList.remove("dark-buttons");
+            navbar.classList.remove("dark-navbar");
+        }else{
+            cover.classList.add("cover-dark");
+            cartButton.classList.add("dark-buttons");
+            navbar.classList.add("dark-navbar");
         }
-    })
-}
-
-function handleLookupAjaxSuccess(data, query, doneCallback) {
-    //cache the result into a global variable
-    cached[query] = data;
-
-    // parse the string into JSON
-    var jsonData = JSON.parse(data);
-    console.log(jsonData)
-
-
-
-    // call the callback function provided by the autocomplete library
-    // add "{suggestions: jsonData}" to satisfy the library response format according to
-    //   the "Response Format" section in documentation
-    doneCallback( { suggestions: jsonData } );
-}
-
-
-/*
- * This function is the select suggestion handler function.
- * When a suggestion is selected, this function is called by the library.
- *
- * You can redirect to the page you want using the suggestion data.
- */
-function handleSelectSuggestion(suggestion) {
-    //jump to the specific result page based on the selected suggestion
-    let currentPath = window.location.pathname;
-    if (currentPath.endsWith("/index.html")) {
-        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
-    }
-    let address = currentPath + "Movie?id=" + suggestion["data"]["id"];
-    window.location.href = address;
-}
-
-// $('#autocomplete') is to find element by the ID "autocomplete"
-$('#autocomplete').autocomplete({
-    lookup: function (query, doneCallback) {
-        handleLookup(query, doneCallback)
-    },
-    onSelect: function(suggestion) {
-        handleSelectSuggestion(suggestion)
-    },
-    // set delay time and minimum characters
-    deferRequestBy: 300,
-    minChars: 3,
+    });
 });
-
-
-/*
- * do normal full text search if no suggestion is selected
- */
-function handleNormalSearch(query) {
-    //you should do normal search here
-    let currentPath = window.location.pathname;
-    if (currentPath.endsWith("/index.html")) {
-        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
-    }
-    let address = currentPath + "MovieList?Full=" + query;
-    window.location.href = address;
-
-}
-
-// bind pressing enter key to a handler function
-$('#autocomplete').keypress(function(event) {
-    // keyCode 13 is the enter key
-    if (event.keyCode == 13) {
-        // pass the value of the input box to the handler function
-        handleNormalSearch($('#autocomplete').val())
-    }
-})
-
-
-

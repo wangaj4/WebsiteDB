@@ -3,6 +3,7 @@
 <head>
     <title>Form Example</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- jQuery is required -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- include jquery autocomplete JS  -->
@@ -13,17 +14,17 @@
 
 <body>
 
-    <div class = "cover font">
+    <div id = "back" class = "cover font">
 
-        <div class = "navbar">
-            <a href = "ShoppingCart" class = "cart-button" >Cart</a>
-            <button id = "toggle">Light/Dark Mode</button>
+        <div class = "navbar" id = "navbar">
+            <a href = "ShoppingCart" class = "cart-button" id = "cart">Cart</a>
+            <button class = "toggle">Light/Dark Mode</button>
         </div>
 
         <div class = "navbar-spacer"></div>
 
 
-        <h1>Main Search Bar</h1>
+        <h1 align = "CENTER" >Main Search Bar</h1>
 
         <div class="container">
             <input type="text" name="hero" id="autocomplete"
@@ -34,7 +35,7 @@
 
 
 
-        <h1>Search Movies by Condition</h1>
+        <h1 align = "center">Search Movies by Condition</h1>
 
         <form ALIGN="CENTER" ACTION="MovieList" METHOD="GET">
             Title: <input TYPE="TEXT" name="Title"><br>
@@ -123,6 +124,8 @@
         </form>
     </div>
 
+
+    <script src="./toggle.js"></script>
 
 
 </body>
