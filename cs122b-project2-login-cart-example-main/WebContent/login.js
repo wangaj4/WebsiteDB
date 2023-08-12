@@ -26,7 +26,9 @@ function handleLoginResult(resultDataString) {
         // error messages on <div> with id "login_error_message"
         console.log("show error message");
         console.log(resultDataJson["message"]);
-        $("#login_error_message").text(resultDataJson["message"]);
+        let error = $("#login_error_message");
+        error.addClass('login_error_appear');
+        error.text(resultDataJson["message"]);
     }
 
 }

@@ -58,9 +58,16 @@ public class LoginServlet extends HttpServlet {
             Connection dbCon = dataSource.getConnection();
 
 
-            if (gRecaptchaResponse == null || gRecaptchaResponse.isEmpty()) {
+//            if (gRecaptchaResponse == null || gRecaptchaResponse.isEmpty()) {
+//                responseJsonObject.addProperty("status", "fail");
+//                responseJsonObject.addProperty("message", "error: Input Captcha");
+//                response.getWriter().write(responseJsonObject.toString());
+//                return;
+//            }
+
+            if(username.length()==0 || password.length()==0){
                 responseJsonObject.addProperty("status", "fail");
-                responseJsonObject.addProperty("message", "Input Captcha");
+                responseJsonObject.addProperty("message", "Please fill in both fields   ");
                 response.getWriter().write(responseJsonObject.toString());
                 return;
             }
@@ -131,9 +138,9 @@ public class LoginServlet extends HttpServlet {
                 request.getServletContext().log("Login failed");
                 // sample error messages. in practice, it is not a good idea to tell user which one is incorrect/not exist.
                 if (!existinguser) {
-                    responseJsonObject.addProperty("message", "user " + username + " doesn't exist");
+                    responseJsonObject.addProperty("message", "error: user " + username + " doesn't exist");
                 } else {
-                    responseJsonObject.addProperty("message", "incorrect password");
+                    responseJsonObject.addProperty("message", "error: incorrect password");
                 }
             }
             response.getWriter().write(responseJsonObject.toString());
