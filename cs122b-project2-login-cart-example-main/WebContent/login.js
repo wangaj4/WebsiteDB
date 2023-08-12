@@ -15,7 +15,7 @@ function handleLoginResult(resultDataString) {
 
     var s = resultDataJson["status"];
     if (s === "success") {
-        window.location.replace("index.html")
+        window.location.replace("./")
     }
     else if (s==="employee"){
         window.location.replace("Dashboard")
