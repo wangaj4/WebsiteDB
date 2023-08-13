@@ -23,6 +23,88 @@ html, body {
     color:whitesmoke;
 }
 
+.carousel{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel-elements{
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-container {
+    flex: 0 0 100%;
+    opacity: 0;
+    transition: opacity 0.6s;
+    text-align: center;
+    display: block;
+}
+
+.carousel-block{
+    display: block;
+    padding: 9%;
+    margin: 10%;
+    margin-block: 8%;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    background-color: #f9f9f9;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.4s;
+}
+
+.active {
+    opacity:100%;
+}
+
+.next-arrow {
+    position: absolute;
+    background: black;
+    font-size: 2em;
+    color:white;
+    cursor: pointer;
+    top:50%;
+    right:1.5rem;
+    border-radius:50%;
+    width:4rem;
+    height:4rem;
+    border:none;
+
+    opacity:50%;
+    text-align: center;
+    box-shadow: 0 0.25rem 0.4rem rgba(0, 0, 0, 0.4);
+}
+
+.next-arrow:hover{
+    opacity:100%;
+}
+
+.prev-arrow {
+    position: absolute;
+    background:black;
+    font-size: 2em;
+    color:white;
+    cursor: pointer;
+    top:50%;
+    left:1.5rem;
+    border-radius: 50%;
+    width:4rem;
+    height:4rem;
+    border:none;
+
+    opacity:50%;
+    text-align: center;
+    box-shadow: 0 0.25rem 0.4rem rgba(0, 0, 0, 0.4);
+}
+
+.prev-arrow:hover{
+    opacity:100%;
+}
+
+.hidden{
+    display:none;
+}
 
 .navbar {
     position: fixed;
@@ -73,8 +155,8 @@ html, body {
     border-radius: 3rem;
     background-color: lightskyblue;
     border: none;
-    height:3.5rem;
-    min-width:7rem;
+    height:2rem;
+    min-width:4rem;
     cursor: pointer;
     margin: 0 2rem;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
@@ -88,16 +170,21 @@ html, body {
 
 .toggleButton{
     height: 100%;
-    width: 55%;
+    width: 59%;
     border-radius: 100%;
     background-color: white;
+    background-image: url("img/sun.png");
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
     margin-left: 50%;
     display: block;
     transition: all 0.4s;
 }
 
 .toggleButtonSwap{
-    margin-left:-4%;
+    margin-left:-8%;
+    background-image: url("img/moon.png");
 }
 
 
@@ -121,8 +208,12 @@ html, body {
 
 .autocomplete-searchbox {
 	height: 50px;
-	width: 600px;
+	width: 80%;
 }
+
+
+
+
 
 .first-color {
     background: #272343;
