@@ -1,12 +1,12 @@
 
-var cached = {};
-function handleLookup(query, doneCallback) {
+var actor_cached = {};
+function actor_handleLookup(query, doneCallback) {
     console.log("autocomplete initiated")
 
-    if(cached.hasOwnProperty(query)){
-        console.log("Getting cached query results")
-        var data = cached[query];
-        handleLookupAjaxSuccess(data, query, doneCallback)
+    if(actor_cached.hasOwnProperty(query)){
+        console.log("Getting actor_cached query results")
+        var data = actor_cached[query];
+        actor_handleLookupAjaxSuccess(data, query, doneCallback)
         return;
     }else{
         console.log("sending AJAX request to backend Java Servlet")
@@ -17,10 +17,10 @@ function handleLookup(query, doneCallback) {
         "method": "GET",
         // generate the request url from the query.
         // escape the query string to avoid errors caused by special characters
-        "url": "auto-suggestion?query=" + escape(query),
+        "url": "actor-suggestion?query=" + escape(query),
         "success": function(data) {
             // pass the data, query, and doneCallback function into the success handler
-            handleLookupAjaxSuccess(data, query, doneCallback)
+            actor_handleLookupAjaxSuccess(data, query, doneCallback)
         },
         "error": function(errorData) {
             console.log("lookup ajax error")
@@ -29,9 +29,9 @@ function handleLookup(query, doneCallback) {
     })
 }
 
-function handleLookupAjaxSuccess(data, query, doneCallback) {
+function actor_handleLookupAjaxSuccess(data, query, doneCallback) {
     //cache the result into a global variable
-    cached[query] = data;
+    actor_cached[query] = data;
 
     // parse the string into JSON
     var jsonData = JSON.parse(data);
@@ -52,23 +52,22 @@ function handleLookupAjaxSuccess(data, query, doneCallback) {
  *
  * You can redirect to the page you want using the suggestion data.
  */
-function handleSelectSuggestion(suggestion) {
+function actor_handleSelectSuggestion(suggestion) {
     //jump to the specific result page based on the selected suggestion
     let currentPath = window.location.pathname;
     if (currentPath.endsWith("/index.html")) {
         currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
     }
-    let address = currentPath + "Movie?id=" + suggestion["data"]["id"];
+    let address = currentPath + "stars?id=" + suggestion["data"]["id"];
     window.location.href = address;
 }
 
-// $('#autocomplete') is to find element by the ID "autocomplete"
-$('#autocomplete').autocomplete({
+$('#actor_autocomplete').autocomplete({
     lookup: function (query, doneCallback) {
-        handleLookup(query, doneCallback)
+        actor_handleLookup(query, doneCallback)
     },
     onSelect: function(suggestion) {
-        handleSelectSuggestion(suggestion)
+        actor_handleSelectSuggestion(suggestion)
     },
     // set delay time and minimum characters
     deferRequestBy: 300,
@@ -79,7 +78,7 @@ $('#autocomplete').autocomplete({
 /*
  * do normal full text search if no suggestion is selected
  */
-function handleNormalSearch(query) {
+function actor_handleNormalSearch(query) {
     //you should do normal search here
     let currentPath = window.location.pathname;
     if (currentPath.endsWith("/index.html")) {
@@ -90,11 +89,11 @@ function handleNormalSearch(query) {
 
 }
 
-$('#autocomplete').keypress(function(event) {
+$('#actor_autocomplete').keypress(function(event) {
     // keyCode 13 is the enter key
     if (event.keyCode == 13) {
         // pass the value of the input box to the handler function
-        handleNormalSearch($('#autocomplete').val())
+        actor_handleNormalSearch($('#actor_autocomplete').val())
     }
 })
 

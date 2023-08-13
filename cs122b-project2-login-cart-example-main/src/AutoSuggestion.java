@@ -16,10 +16,7 @@ import java.util.ResourceBundle;
 
 @WebServlet("/auto-suggestion")
 public class AutoSuggestion extends HttpServlet {
-	/*
-	 * populate the Super hero hash map.
-	 * Key is hero ID. Value is hero name.
-	 */
+
 	public static HashMap<Integer, String> superHeroMap = new HashMap<>();
 
 	static {
@@ -96,9 +93,6 @@ public class AutoSuggestion extends HttpServlet {
 				return;
 			}
 
-			// search on superheroes and add the results to JSON Array
-			// this example only does a substring match
-			// TODO: in project 4, you should do full text search with MySQL to find the matches on movies and stars
 			BasicDataSource dataSource = new BasicDataSource();
 			dataSource.setUrl("jdbc:mysql://localhost:3306/moviedb");
 			dataSource.setUsername("mytestuser");
@@ -109,11 +103,12 @@ public class AutoSuggestion extends HttpServlet {
 			PreparedStatement statement = connection.prepareStatement(query);
 
 			String[] searchTerms = str.split("\\s+");
-			String fullTextSearch = "";
+			StringBuilder fullTextSearchBuilder = new StringBuilder();
 			for (String term : searchTerms) {
-				fullTextSearch += "+" + term + "* ";
+				fullTextSearchBuilder.append("+").append(term).append("* ");
 			}
-			statement.setString(1, fullTextSearch.trim());
+			String fullTextSearch = fullTextSearchBuilder.toString().trim();
+			statement.setString(1, fullTextSearch);
 
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){

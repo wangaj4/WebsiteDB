@@ -14,7 +14,7 @@ html, body {
 .cover{
     position:relative;
     min-height: 100%;
-    background: linear-gradient(to bottom right, lightskyblue, #272343);
+    background: linear-gradient(to bottom right, lightskyblue, skyblue);
     transition: all 0.7s;
 }
 
@@ -106,12 +106,56 @@ html, body {
     display:none;
 }
 
+.logo{
+    height:100%;
+    padding-inline: 2%;
+}
+
+.logo-glow{
+    filter: drop-shadow(0 0 0.4rem rgba(255,255,0,1));
+}
+
+.genres{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.select-form {
+    padding: 0.5rem;
+    border-radius: 3rem;
+    background-color: whitesmoke;
+    flex-basis: 100%;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.select-form:hover{
+    background-color: lightgray;
+}
+
+.select-form select {
+    width: 100%;
+    height: 100%;
+    padding: 0.3rem;
+    border: none;
+    background-color: transparent;
+}
+
+
+/* Style the custom select when active */
+.select-form:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 7rem;
     background-color: #f9f9f9;
     z-index: 999;
     box-shadow: 0 .2rem .4rem rgba(0, 0, 0, 0.2);
@@ -119,7 +163,7 @@ html, body {
     justify-content: space-between;
     align-items: center;
     transition: all 0.4s;
-
+    height:4rem;
 }
 
 .dark-navbar{
@@ -131,21 +175,27 @@ html, body {
 }
 
 .cart-button {
-    background-color:lightskyblue;
+    background: url("img/cart.png") no-repeat 1rem cornflowerblue;
     text-decoration: none;
-    color:#272343;
-    border-radius: 3rem;
-    cursor:pointer;
-    padding: 1.2rem 4rem;
-    margin: 0 2rem;
-    font-weight:700;
-    font-size: 2rem;
+    color: #272343;
+    cursor: pointer;
+    padding: 0.6rem 1.5rem;
+    font-weight: 400;
+    font-size: 1.6rem;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
     transition: all 0.25s;
+    height: 1.5rem;
+    width: 3rem;
+    margin-right: 1rem;
+    background-size: 2rem;
+    border-radius: 5px;
 }
 
 .cart-button:hover {
     background-color: darkslateblue;
+    background-position-x: 2rem;
+
+
 }
 
 
@@ -163,9 +213,17 @@ html, body {
     transition: all 0.25s;
 }
 
+.toggle:hover{
+    background-color: #659eca;
+}
+
 .dark-buttons{
     background-color: #4c4c4c;
     color:whitesmoke;
+}
+
+.dark-buttons:hover{
+    background-color:gray;
 }
 
 .toggleButton{
@@ -207,8 +265,12 @@ html, body {
 
 
 .autocomplete-searchbox {
-	height: 50px;
-	width: 80%;
+    height: 2.5rem;
+    width: 40%;
+    border-radius: 3rem;
+    margin: 0 2rem;
+    border: 0.1rem solid black;
+    padding-left: 1rem;
 }
 
 
@@ -348,6 +410,11 @@ html, body {
     justify-content: center;
     align-items:center;
     min-height:2rem;
+}
+
+
+.no-transition{
+    transition: all 0s;
 }
 
 
