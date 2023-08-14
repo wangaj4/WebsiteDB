@@ -18,9 +18,9 @@
 
         <div class = "navbar" id = "navbar">
             <img src = "img/logoblack.png" class = "logo" id = "logo">
-            <input type="text" name="hero" id="autocomplete"
+            <input type="text" id="autocomplete"
                    class="autocomplete-searchbox"
-                   placeholder="Full-Text Movie Search"/>
+                   placeholder="Search for Movies..."/>
             <form ACTION="MovieList" class = "genres">
                 <select id = "genre" name="Genre" class="select-form">
                     <option value="">Browse Genre</option>
@@ -64,8 +64,10 @@
             <div class = "carousel-elements">
                 <div class = "carousel-container">
                     <div class = "carousel-block">
-                        <h1>Main Search Bar</h1>
-
+                        <h1>Search for Movies by Title</h1>
+                        <input type="text" name="hero"
+                               class="autocomplete-searchbox longer"
+                               placeholder="Search by title..."/>
                     </div>
 
                 </div>
