@@ -68,32 +68,28 @@ $(document).ready(function() {
 });
 
 
+let newStyleRules = [];
 
-function change_selected(){
-    const updatedStyle1 =
-        `.autocomplete-selected {
-        background: #747474;
-    }`;
-    const updatedStyle2 =
-        `.autocomplete-suggestions strong {
-        color:gold;
-    }`;
+function change_selected(on) {
+    const updatedStyle1 = '.autocomplete-selected { background: #747474; }\n';
+    const updatedStyle2 = '.autocomplete-suggestions strong { color: gold; }\n';
 
     const styleSheet = document.styleSheets[0];
 
-    styleSheet.insertRule(updatedStyle1, styleSheet.cssRules.length);
-    styleSheet.insertRule(updatedStyle2, styleSheet.cssRules.length);
+    // Store the original rules if not already stored
+    if (newStyleRules.length === 0) {
+        newStyleRules.push(styleSheet.insertRule(updatedStyle1, styleSheet.cssRules.length));
+        newStyleRules.push(styleSheet.insertRule(updatedStyle2, styleSheet.cssRules.length));
+    }
+
 }
 
-function revert_selected(){
-
-    let originalStyle1 = '.autocomplete-selected { background: #F0F0F0; }\n';
-
-    let originalStyle2 = '.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }\n';
-
-
+function revert_selected() {
     const styleSheet = document.styleSheets[0];
 
-    styleSheet.insertRule(originalStyle1, styleSheet.cssRules.length);
-    styleSheet.insertRule(originalStyle2, styleSheet.cssRules.length);
+    styleSheet.deleteRule(newStyleRules[0]);
+    styleSheet.deleteRule(newStyleRules[1]-1);
+
+    // Clear the array to indicate that the rules are removed
+    newStyleRules = [];
 }
