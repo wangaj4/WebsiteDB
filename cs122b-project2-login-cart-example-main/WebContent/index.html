@@ -20,7 +20,7 @@
             <img src = "img/logoblack.png" class = "logo" id = "logo">
             <input type="text" id="autocomplete"
                    class="autocomplete-searchbox"
-                   placeholder="Search for Movies..."/>
+                   placeholder="Search by keywords..."/>
             <form ACTION="MovieList" class = "genres">
                 <select id = "genre" name="Genre" class="select-form">
                     <option value="">Browse Genre</option>
@@ -75,7 +75,6 @@
                     <div class = "carousel-block">
                         <h1>Search Movies by Condition</h1>
                         <form ALIGN="CENTER" ACTION="MovieList" METHOD="GET">
-                            Title: <input TYPE="TEXT" name="Title"><br>
                             Year: <input TYPE="TEXT" name="Year"><br>
                             Director: <input TYPE="TEXT" name="Director"><br>
                             <input TYPE="SUBMIT" VALUE="Search Movie">
@@ -99,10 +98,17 @@
         </div>
 
 
+        <div class = "footer">
+            <p>&copy; 2023 Andrew J Wang. All rights reserved.</p>
+        </div>
+
+
         <script src="./index.js"></script>
 
 
     </div>
+
+
 
 
     <script src="./toggle.js"></script>
