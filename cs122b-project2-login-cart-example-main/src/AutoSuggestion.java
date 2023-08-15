@@ -1,5 +1,6 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -7,6 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +20,16 @@ import java.util.ResourceBundle;
 
 @WebServlet("/auto-suggestion")
 public class AutoSuggestion extends HttpServlet {
+
+	public DataSource dataSource;
+
+	public void init(ServletConfig config) {
+		try {
+			dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static HashMap<Integer, String> superHeroMap = new HashMap<>();
 
@@ -93,10 +107,8 @@ public class AutoSuggestion extends HttpServlet {
 				return;
 			}
 
-			BasicDataSource dataSource = new BasicDataSource();
-			dataSource.setUrl("jdbc:mysql://localhost:3306/moviedb");
-			dataSource.setUsername("mytestuser");
-			dataSource.setPassword("My6$Password");
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			// create database connection
 			Connection connection = dataSource.getConnection();
 
 			String query = "SELECT * FROM movies WHERE MATCH(title) AGAINST (? IN BOOLEAN MODE) LIMIT 10";

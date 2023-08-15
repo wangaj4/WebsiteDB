@@ -75,27 +75,4 @@ $('#actor_autocomplete').autocomplete({
 });
 
 
-/*
- * do normal full text search if no suggestion is selected
- */
-function actor_handleNormalSearch(query) {
-    //you should do normal search here
-    let currentPath = window.location.pathname;
-    if (currentPath.endsWith("/index.html")) {
-        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
-    }
-    let address = currentPath + "MovieList?Full=" + query;
-    window.location.href = address;
-
-}
-
-$('#actor_autocomplete').keypress(function(event) {
-    // keyCode 13 is the enter key
-    if (event.keyCode == 13) {
-        // pass the value of the input box to the handler function
-        actor_handleNormalSearch($('#actor_autocomplete').val())
-    }
-})
-
-
 
