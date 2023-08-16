@@ -11,15 +11,11 @@ function title_handleLookup(query, doneCallback) {
     }else{
         console.log("sending AJAX request to backend Java Servlet")
     }
-    // sending the HTTP GET request to the Java Servlet endpoint auto-suggestion
-    // with the query data
+
     jQuery.ajax({
         "method": "GET",
-        // generate the request url from the query.
-        // escape the query string to avoid errors caused by special characters
         "url": "title-suggestion?query=" + escape(query),
         "success": function(data) {
-            // pass the data, query, and doneCallback function into the success handler
             title_handleLookupAjaxSuccess(data, query, doneCallback)
         },
         "error": function(errorData) {
@@ -30,10 +26,8 @@ function title_handleLookup(query, doneCallback) {
 }
 
 function title_handleLookupAjaxSuccess(data, query, doneCallback) {
-    //cache the result into a global variable
     title_cached[query] = data;
 
-    // parse the string into JSON
     var jsonData = JSON.parse(data);
     console.log(jsonData)
 
@@ -43,10 +37,9 @@ function title_handleLookupAjaxSuccess(data, query, doneCallback) {
 
 
 function title_handleSelectSuggestion(suggestion) {
-    //jump to the specific result page based on the selected suggestion
     let currentPath = window.location.pathname;
     if (currentPath.endsWith("/index.html")) {
-        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
+        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html") if it's there
     }
     let address = currentPath + "Movie?id=" + suggestion["data"]["id"];
     window.location.href = address;
@@ -65,11 +58,7 @@ $('#title_autocomplete').autocomplete({
 });
 
 
-/*
- * do normal full text search if no suggestion is selected
- */
 function title_handleNormalSearch(query) {
-    //you should do normal search here
     let currentPath = window.location.pathname;
     if (currentPath.endsWith("/index.html")) {
         currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")

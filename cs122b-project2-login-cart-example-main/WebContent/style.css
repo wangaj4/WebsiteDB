@@ -22,7 +22,7 @@ html, body {
 .cover{
     position:relative;
     min-height: 100%;
-    background: linear-gradient(to bottom right, lightskyblue, skyblue);
+    background: linear-gradient(to bottom right, lightskyblue, pink);
     transition: all 0.7s;
 }
 
@@ -30,6 +30,30 @@ html, body {
     background: linear-gradient(to bottom left, #2a2a2a, #151515);
     color:gold;
 }
+
+.search-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    background-color: #EEE;
+    border: none;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    background-color: #DDD;
+}
+
+.search-container{
+    flex: 0 0 100%;
+    text-align: center;
+    display: block;
+}
+
 
 .carousel{
     position: relative;

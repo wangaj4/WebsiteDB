@@ -59,6 +59,40 @@
         <div class = "navbar-spacer"></div>
 
 
+        <div class="search-tabs">
+            <button class="tab-button active" data-target="block1">Title Search</button>
+            <button class="tab-button" data-target="block2">Search Bar 2</button>
+            <button class="tab-button" data-target="block3">Actor Search</button>
+        </div>
+
+        <div class = "search-container">
+            <div class = "carousel-block" id = "block1">
+                <h1>Search for Movies by Title</h1>
+                <input type="text" name="hero"
+                       class="autocomplete-searchbox longer" id = "title_autocomplete"
+                       placeholder="Search by title..."/>
+            </div>
+
+            <div class = "carousel-block" id = "block2">
+                <h1>Search Movies by Condition</h1>
+                <form ALIGN="CENTER" ACTION="MovieList" METHOD="GET">
+                    Year: <input TYPE="TEXT" name="Year"><br>
+                    Director: <input TYPE="TEXT" name="Director"><br>
+                    <input TYPE="SUBMIT" VALUE="Search Movie">
+
+                </form>
+            </div>
+
+            <div class = "carousel-block" id = "block3">
+                <h1>Search Actors</h1>
+                <input type="text" name="hero" id="actor_autocomplete"
+                       class="autocomplete-searchbox form-control"
+                       placeholder="Search Actors"/>
+            </div>
+
+        </div>
+
+        <!--
         <div class = "carousel">
 
             <div class = "carousel-elements">
@@ -71,6 +105,8 @@
                     </div>
 
                 </div>
+
+
                 <div class = "carousel-container">
                     <div class = "carousel-block">
                         <h1>Search Movies by Condition</h1>
@@ -92,10 +128,10 @@
                 </div>
 
 
+
             </div>
-            <button class="prev-arrow hidden"><</button>
-            <button class="next-arrow">&gt;</button>
         </div>
+        -->
 
 
         <div class = "footer">
@@ -116,6 +152,7 @@
     <script src="./select.js"></script>
     <script src="./actorauto.js"></script>
     <script src="./titleauto.js"></script>
+    <script src = "switch.js"></script>
 
 </body>
 </html>
