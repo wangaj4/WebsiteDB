@@ -1,21 +1,20 @@
+const cover = document.getElementById('back');
+const logo = document.getElementById('logo');
+const cartButton = document.getElementById('cart');
+const toggle = document.getElementById('toggle');
+const toggleButton = document.getElementById('toggleButton');
+const genre = document.getElementById('genre');
+const darken = document.querySelectorAll('.darken');
+const carouselBlocks = document.getElementsByClassName('carousel-block');
+const searches = document.getElementsByClassName('autocomplete-searchbox');
 
+const suggestions = document.getElementsByClassName('autocomplete-suggestions');
+const tabs = document.querySelectorAll('.tab-button');
+const bars = document.querySelectorAll('.bar');
 
 $(document).ready(function() {
 
     $('.toggle').click(function() {
-
-        const cover = document.getElementById('back');
-        const logo = document.getElementById('logo');
-        const cartButton = document.getElementById('cart');
-        const toggle = document.getElementById('toggle');
-        const toggleButton = document.getElementById('toggleButton');
-        const genre = document.getElementById('genre');
-        const navbar = document.getElementById('navbar');
-        const carouselBlocks = document.getElementsByClassName('carousel-block');
-        const searches = document.getElementsByClassName('autocomplete-searchbox');
-
-        const suggestions = document.getElementsByClassName('autocomplete-suggestions');
-
 
         if (cover.classList.contains("cover-dark")){
             cover.classList.remove("cover-dark");
@@ -23,7 +22,6 @@ $(document).ready(function() {
             logo.src = "img/logoblack.png";
             logo.classList.remove("logo-glow");
             toggle.classList.remove("dark-buttons");
-            navbar.classList.remove("dark-navbar");
             toggleButton.classList.remove("toggleButtonSwap");
             genre.classList.remove("dark-buttons");
             for(let i = 0;i<carouselBlocks.length;i++){
@@ -36,6 +34,15 @@ $(document).ready(function() {
                 suggestions[i].classList.remove('gray');
                 suggestions[i].classList.remove('white');
             }
+            tabs.forEach(button =>{
+                button.classList.remove('tab-button-dark');
+            });
+            bars.forEach(element =>{
+                element.classList.remove('bar-dark');
+            });
+            darken.forEach(element =>{
+                element.classList.remove('dark-navbar');
+            });
 
             revert_selected();
 
@@ -47,7 +54,6 @@ $(document).ready(function() {
             logo.src = "img/logoyellow.png";
             logo.classList.add("logo-glow");
             toggle.classList.add("dark-buttons");
-            navbar.classList.add("dark-navbar");
             toggleButton.classList.add("toggleButtonSwap");
             genre.classList.add("dark-buttons");
             for(let i = 0;i<carouselBlocks.length;i++){
@@ -60,6 +66,15 @@ $(document).ready(function() {
                 suggestions[i].classList.add('gray');
                 suggestions[i].classList.add('white');
             }
+            tabs.forEach(button =>{
+                button.classList.add('tab-button-dark');
+            });
+            bars.forEach(element =>{
+                element.classList.add('bar-dark');
+            });
+            darken.forEach(element =>{
+                element.classList.add('dark-navbar');
+            });
 
             change_selected();
 

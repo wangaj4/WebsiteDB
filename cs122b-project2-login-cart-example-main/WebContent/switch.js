@@ -10,7 +10,7 @@ tabButtons.forEach(tabButton => {
         });
 
         searchBars.forEach(searchBar => {
-            searchBar.style.display = searchBar.id === targetId ? 'block' : 'none';
+            searchBar.classList.toggle('active', searchBar.id === targetId);
         });
     });
 });
