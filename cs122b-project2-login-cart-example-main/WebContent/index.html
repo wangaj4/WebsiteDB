@@ -56,7 +56,7 @@
                 </form>
                 <input type="text" id="autocomplete"
                        class="autocomplete-searchbox"
-                       placeholder="Search by keywords..."/>
+                       placeholder="Search movies by keywords..."/>
             </div>
             <button class = "toggle" id = "toggle">
                 <span id = "toggleButton" class = "toggleButton"></span>
@@ -79,24 +79,21 @@
                 <h1>Search for Movies by Title</h1>
                 <input type="text" name="hero"
                        class="autocomplete-searchbox" id = "title_autocomplete"
-                       placeholder="Search by title..."/>
+                       placeholder="Search movies by title..."/>
             </div>
 
             <div class = "carousel-block" id = "block2">
                 <h1>Search Movies by Director</h1>
-                <form ALIGN="CENTER" ACTION="MovieList" METHOD="GET">
-                    Year: <input TYPE="TEXT" name="Year"><br>
-                    Director: <input TYPE="TEXT" name="Director"><br>
-                    <input TYPE="SUBMIT" VALUE="Search Movie">
-
-                </form>
+                <input type="text" name="hero"
+                       class="autocomplete-searchbox" id = "director_autocomplete"
+                       placeholder="Search movies by director..."/>
             </div>
 
             <div class = "carousel-block" id = "block3">
                 <h1>Search Actors</h1>
                 <input type="text" name="hero" id="actor_autocomplete"
                        class="autocomplete-searchbox form-control"
-                       placeholder="Search Actors"/>
+                       placeholder="Search actors"/>
             </div>
 
         </div>
@@ -148,19 +145,20 @@
         </div>
 
 
-        <script src="./index.js"></script>
+
 
 
     </div>
 
 
 
-
+    <script src="./index.js"></script>
     <script src="./toggle.js"></script>
     <script src="./carousel.js"></script>
     <script src="./select.js"></script>
     <script src="./actorauto.js"></script>
     <script src="./titleauto.js"></script>
+    <script src="./directorauto.js"></script>
     <script src = "./switch.js"></script>
     <script src="./navbarToggle.js"></script>
 

@@ -8,3 +8,4 @@ navbarToggle.addEventListener('click', () => {
     document.getElementById("spacer").classList.toggle("active");
 
 });
+
