@@ -35,7 +35,7 @@ html, body {
 
 .cover-dark{
     background: linear-gradient(to bottom left, #2a2a2a, #151515);
-    color:gold;
+    color:white;
 }
 
 .search-tabs {
@@ -54,12 +54,12 @@ html, body {
 }
 
 .tab-button-dark{
-    color:gold;
+    color:white;
     background-color: #4c4c4c;
 }
 
 .tab-button-dark.active{
-    filter: drop-shadow(0 0 0.2rem rgba(255,255,0,1));
+    filter: drop-shadow(0 0 0.2rem rgba(255,255,255,1));
 }
 
 .tab-button.active {
@@ -236,7 +236,7 @@ html, body {
 }
 
 .bar-dark{
-    background-color: gold;
+    background-color: white;
 
 }
 
@@ -312,7 +312,7 @@ html, body {
 
 .dark-buttons{
     background-color: #4c4c4c;
-    color:gold;
+    color:white;
 }
 
 .dark-buttons:hover{
@@ -370,7 +370,7 @@ html, body {
 
 .autocomplete-dark{
     background-color: #4c4c4c;
-    color:gold;
+    color:white;
 
 }
 

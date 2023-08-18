@@ -70,8 +70,7 @@ $('#actor_autocomplete').autocomplete({
         actor_handleSelectSuggestion(suggestion)
     },
     // set delay time and minimum characters
-    deferRequestBy: 300,
-    minChars: 3,
+    minChars: 2,
 });
 
 

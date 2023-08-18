@@ -53,8 +53,7 @@ $('#title_autocomplete').autocomplete({
         title_handleSelectSuggestion(suggestion)
     },
     // set delay time and minimum characters
-    deferRequestBy: 300,
-    minChars: 3,
+    minChars: 2,
 });
 
 
