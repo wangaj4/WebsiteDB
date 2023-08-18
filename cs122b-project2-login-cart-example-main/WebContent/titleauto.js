@@ -78,3 +78,8 @@ $('#title_autocomplete').keypress(function(event) {
 
 
 
+
+
+window.addEventListener("popstate", function() {
+    location.reload(true);
+});

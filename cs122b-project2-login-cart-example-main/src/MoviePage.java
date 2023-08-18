@@ -49,7 +49,6 @@ public class MoviePage extends HttpServlet{
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        long startTimeTS = System.nanoTime();
         HttpSession session = request.getSession();
         if (request.getParameter("reset") != null && request.getParameter("reset").equals("true")){
             session.setAttribute("page", null);
@@ -71,7 +70,7 @@ public class MoviePage extends HttpServlet{
         PrintWriter out = response.getWriter();
 
         out.println("<html>");
-        out.println("<head><title>Fabflix</title></head>");
+        out.println("<head><title>Flickbase</title></head>");
         out.println("<P align = \"right\"><a href=\"ShoppingCart\">" + "Proceed to Cart" + "</a></P align = \"right\"></td>");
 
 
@@ -111,20 +110,6 @@ public class MoviePage extends HttpServlet{
                 session.setAttribute("Title", Title);
             }
 
-
-            //Browse by title matching starting letter
-            String start = request.getParameter("start");
-            if(start == null || start == ""){
-                start = (String) session.getAttribute("start");
-            }
-            if(start != null){
-                if (start.equals("*")){
-                    query += " AND movies.title REGEXP '^[^a-zA-Z0-9]'";
-                }else {
-                    query += " AND movies.title LIKE '" + start + "%'";
-                }
-                session.setAttribute("start",start);
-            }
 
             //If genre parameter exists, change query to find matching genre movies instead
             String Genre = request.getParameter("Genre");
@@ -199,28 +184,29 @@ public class MoviePage extends HttpServlet{
 
             // execute query
             PreparedStatement statement = connection.prepareStatement(query);
-            if(fts == true){
+            if(fts){
                 statement.setString(1,fullTextSearch.trim());
             }
 
             //out.println("<h1>" + query + "</h1>");
 
-            long startTimeTJ = System.nanoTime();
             ResultSet resultSet = statement.executeQuery();
-            long endTimeTJ = System.nanoTime();
-            long elapsedTimeTJ = endTimeTJ - startTimeTJ; // elapsed time in nano seconds. Note: print the values in nanoseconds
-
 
             out.println("<td><a href=\"MovieList?reset=true\">" + "Back to Movie Search" + "</a></td>");
 
             out.println("<h1>Found Movies</h1>");
 
             //Display active filters
-            out.println("<h4>Title Filter: "+ Title + "</h4>");
-            out.println("<h4>Year Filter: "+ Year + "</h4>");
-            out.println("<h4>Director Filter: "+ Director + "</h4>");
-            out.println("<h4>First Letter Filter: "+ start + "</h4>");
-            out.println("<h4>Genre Filter: "+ Genre + "</h4>");
+            if(Title != null){
+                out.println("<h4>Showing Movies with: "+ Title + "</h4>");
+            }
+            if(Director != null){
+                out.println("<h4>Showing Movies with Director: "+ Director + "</h4>");
+
+            }
+            if(Genre != null){
+                out.println("<h4>Showing Movies with Genre: "+ Genre + "</h4>");
+            }
 
             //Change number of results per page
             out.println("<h4>Current results per page: "+ Integer.toString(perPage) + "</h4>");
@@ -325,6 +311,7 @@ public class MoviePage extends HttpServlet{
                 }
                 out.println("</td>");
 
+                //Find first three stars
                 out.println("<td>");
                 index = 0;
                 for (List<String> x : movieStarsMap.get(movieid)){

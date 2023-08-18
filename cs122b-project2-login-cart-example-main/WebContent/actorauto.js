@@ -76,3 +76,9 @@ $('#actor_autocomplete').autocomplete({
 
 
 
+
+window.addEventListener("popstate", function() {
+    location.reload(true);
+});
+
+

@@ -38,9 +38,53 @@ public class MovieServlet extends HttpServlet {
         // Get the PrintWriter for writing response
         PrintWriter out = response.getWriter();
 
+        out.println("<!DOCTYPE html>");
         out.println("<html>");
-        out.println("<head><title>Fabflix</title></head>");
+        out.println("<head>");
+        out.println("    <title>FlickBase Search</title>");
+        out.println("    <link rel=\"stylesheet\" href=\"style.css\">");
+        out.println("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+        out.println("    <!-- jQuery is required -->");
+        out.println("    <script src=\"https://code.jquery.com/jquery-3.6.4.min.js\"></script>");
+        out.println("    <!-- include jquery autocomplete JS  -->");
+        out.println("    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.11/jquery.autocomplete.min.js\"></script>");
+        out.println("</head>");
         out.println("<body>");
+
+        out.println("    <div id=\"back\" class=\"cover font\">");
+
+        out.println("        <div class=\"navbar darken\" id=\"navbar\">");
+        out.println("            <div class=\"navbar-toggle\">");
+        out.println("                <span class=\"bar\"></span>");
+        out.println("                <span class=\"bar\"></span>");
+        out.println("                <span class=\"bar\"></span>");
+        out.println("            </div>");
+        out.println("            <img src=\"img/logoblack.png\" class=\"logo\" id=\"logo\">");
+        out.println("            <div class=\"navbar-content\">");
+
+        out.println("                <form ACTION=\"MovieList\" class=\"genres\">");
+        out.println("                    <select id=\"genre\" name=\"Genre\" class=\"select-form\">");
+        out.println("                        <option value=\"\">Browse Genre</option>");
+        out.println("                        <option value=\"Action\">Action</option>");
+        out.println("                        <option value=\"Adult\">Adult</option>");
+        out.println("                        <option value=\"Adventure\">Adventure</option>");
+        out.println("                        <!-- Add more options here -->");
+        out.println("                    </select>");
+        out.println("                </form>");
+        out.println("                <input type=\"text\" id=\"autocomplete\"");
+        out.println("                       class=\"autocomplete-searchbox\"");
+        out.println("                       placeholder=\"Search movies by keywords...\"/>");
+        out.println("            </div>");
+        out.println("            <button class=\"toggle\" id=\"toggle\">");
+        out.println("                <span id=\"toggleButton\" class=\"toggleButton\"></span>");
+        out.println("            </button>");
+        out.println("            <a href=\"ShoppingCart\" class=\"cart-button\" id=\"cart\"></a>");
+        out.println("        </div>");
+
+        out.println("        <div class=\"navbar-spacer\" id=\"spacer\"></div>");
+
+
+
 
 
         try {
@@ -128,7 +172,6 @@ public class MovieServlet extends HttpServlet {
                 }
                 genreSet.close();
 
-                out.println("<html><body>");
                 out.println("<form method='post' action='Movie?id=" + id + "'>");
                 out.println("<input type='submit' value='Add To Cart'>");
                 out.println("</form>");
@@ -137,10 +180,8 @@ public class MovieServlet extends HttpServlet {
                 if (request.getParameter("success") != null && request.getParameter("success").equals("1")){
                     out.println("<p>Success!</p>");
                 }
-                out.println("</body></html>");
 
             }else {
-                out.println("<head><title>MyServlet</title></head>");
                 out.println("<h1>No ID found</h1>");
             }
 
@@ -157,6 +198,11 @@ public class MovieServlet extends HttpServlet {
             out.println("</p>");
         }
 
+        out.println("    </div>");
+        out.println("<script src=\"./index.js\"></script>");
+        out.println("<script src=\"./toggle.js\"></script>");
+        out.println("<script src=\"./select.js\"></script>");
+        out.println("<script src=\"./navbarToggle.js\"></script>");
         out.println("</body>");
         out.println("</html>");
         out.close();
