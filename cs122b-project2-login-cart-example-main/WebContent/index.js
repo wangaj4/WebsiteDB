@@ -53,12 +53,7 @@ function handleLookupAjaxSuccess(data, query, doneCallback) {
  * You can redirect to the page you want using the suggestion data.
  */
 function handleSelectSuggestion(suggestion) {
-    //jump to the specific result page based on the selected suggestion
-    let currentPath = window.location.pathname;
-    if (currentPath.endsWith("/index.html")) {
-        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
-    }
-    let address = currentPath + "Movie?id=" + suggestion["data"]["id"];
+    let address = "Movie?id=" + suggestion["data"]["id"];
     window.location.href = address;
 }
 
@@ -79,12 +74,8 @@ $('#autocomplete').autocomplete({
  * do normal full text search if no suggestion is selected
  */
 function handleNormalSearch(query) {
-    //you should do normal search here
-    let currentPath = window.location.pathname;
-    if (currentPath.endsWith("/index.html")) {
-        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
-    }
-    let address = currentPath + "MovieList?Full=" + query;
+
+    let address = "MovieList?Full=" + query;
     window.location.href = address;
 
 }

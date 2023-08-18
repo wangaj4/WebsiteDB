@@ -37,11 +37,8 @@ function title_handleLookupAjaxSuccess(data, query, doneCallback) {
 
 
 function title_handleSelectSuggestion(suggestion) {
-    let currentPath = window.location.pathname;
-    if (currentPath.endsWith("/index.html")) {
-        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html") if it's there
-    }
-    let address = currentPath + "Movie?id=" + suggestion["data"]["id"];
+
+    let address = "Movie?id=" + suggestion["data"]["id"];
     window.location.href = address;
 }
 
@@ -58,11 +55,8 @@ $('#title_autocomplete').autocomplete({
 
 
 function title_handleNormalSearch(query) {
-    let currentPath = window.location.pathname;
-    if (currentPath.endsWith("/index.html")) {
-        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
-    }
-    let address = currentPath + "MovieList?Title=" + query;
+
+    let address = "MovieList?Title=" + query;
     window.location.href = address;
 
 }

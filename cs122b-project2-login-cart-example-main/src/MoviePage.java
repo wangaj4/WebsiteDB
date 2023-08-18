@@ -197,16 +197,17 @@ public class MoviePage extends HttpServlet{
             out.println("<h1>Found Movies</h1>");
 
             //Display active filters
-            if(Title != null){
-                out.println("<h4>Showing Movies with: "+ Title + "</h4>");
-            }
-            if(Director != null){
-                out.println("<h4>Showing Movies with Director: "+ Director + "</h4>");
-
-            }
             if(Genre != null){
                 out.println("<h4>Showing Movies with Genre: "+ Genre + "</h4>");
             }
+            else if(Title != null){
+                out.println("<h4>Showing Movies with: "+ Title + "</h4>");
+            }
+            else if(Director != null){
+                out.println("<h4>Showing Movies with Director: "+ Director + "</h4>");
+
+            }
+
 
             //Change number of results per page
             out.println("<h4>Current results per page: "+ Integer.toString(perPage) + "</h4>");

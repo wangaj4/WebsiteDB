@@ -88,12 +88,18 @@ public class MovieServlet extends HttpServlet {
 
 
         try {
-            out.println("<td><a href=\"MovieList\">" + "Back to Results" + "</a>");
-            out.println("<P align = \"right\"><a href=\"ShoppingCart\">" + "Proceed to Cart" + "</a></P align = \"right\"></td>");
-            out.println("<p></p>");
+
+            String id = request.getParameter("id");
+
+
+            out.println("<div class = \"results-addcart\">");
+            out.println("<a href=\"MovieList\" class = \"results\"> " + "Back to Results" + "</a>");
+            out.println("<form method='post' class = \"results cart-form\" action='Movie?id=" + id + "'>");
+            out.println("<button type='submit'>Add To Cart</button>");
+            out.println("</div>");
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            String id = request.getParameter("id");
+
             // create database connection
             Connection connection = dataSource.getConnection();
             // declare statement
@@ -107,13 +113,15 @@ public class MovieServlet extends HttpServlet {
                 ResultSet resultSet = statement.executeQuery();
                 resultSet.next();
 
-                out.println("<table border>");
-                out.println("<tr>");
-                out.println("<td>Title</a></td>");
-                out.println("<td>Year</td>");
-                out.println("<td>Director</td>");
-                out.println("<td>Rating</td>");
-                out.println("</tr>");
+                out.println("<div class = \"star-container darken\">");
+                out.println("   <table border>");
+                out.println("   <tr>");
+                out.println("   <td>Title</a></td>");
+                out.println("   <td>Year</td>");
+                out.println("   <td>Director</td>");
+                out.println("   <td>Rating</td>");
+                out.println("   </tr>");
+                out.println("   </div>");
 
                 String title = resultSet.getString("title");
                 titleName = title;
@@ -125,14 +133,14 @@ public class MovieServlet extends HttpServlet {
 
 
 
-                out.println("<tr>");
-                out.println("<td>" + title + "</td>");
-                out.println("<td>" + year + "</td>");
-                out.println("<td>" + director + "</td>");
-                out.println("<td>" + rating + "</td>");
-                out.println("</tr>");
+                out.println("   <tr>");
+                out.println("   <td>" + title + "</td>");
+                out.println("   <td>" + year + "</td>");
+                out.println("   <td>" + director + "</td>");
+                out.println("   <td>" + rating + "</td>");
+                out.println("   </tr>");
 
-                out.println("</table>");
+                out.println("   </table>");
 
 
                 //Show all stars in the movie
@@ -141,7 +149,7 @@ public class MovieServlet extends HttpServlet {
                 statement.setString(1,id);
                 ResultSet starSet = statement.executeQuery();
 
-                out.println("<h2>Stars:</h2>");
+                out.println("   <h2>Actors:</h2>");
                 starSet.next();
 
                 String starName = starSet.getString("name");
@@ -172,10 +180,9 @@ public class MovieServlet extends HttpServlet {
                 }
                 genreSet.close();
 
-                out.println("<form method='post' action='Movie?id=" + id + "'>");
-                out.println("<input type='submit' value='Add To Cart'>");
-                out.println("</form>");
 
+                out.println("</form>");
+                out.println("</div>");
 
                 if (request.getParameter("success") != null && request.getParameter("success").equals("1")){
                     out.println("<p>Success!</p>");
@@ -198,6 +205,11 @@ public class MovieServlet extends HttpServlet {
             out.println("</p>");
         }
 
+        out.println("        <div class=\"navbar-spacer\"></div>");
+
+        out.println("        <div class=\"footer\">");
+        out.println("            <p>&copy; 2023 Andrew J Wang. All rights reserved.</p>");
+        out.println("        </div>");
         out.println("    </div>");
         out.println("<script src=\"./index.js\"></script>");
         out.println("<script src=\"./toggle.js\"></script>");

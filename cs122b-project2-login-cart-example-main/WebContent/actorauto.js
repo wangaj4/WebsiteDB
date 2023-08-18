@@ -53,12 +53,8 @@ function actor_handleLookupAjaxSuccess(data, query, doneCallback) {
  * You can redirect to the page you want using the suggestion data.
  */
 function actor_handleSelectSuggestion(suggestion) {
-    //jump to the specific result page based on the selected suggestion
-    let currentPath = window.location.pathname;
-    if (currentPath.endsWith("/index.html")) {
-        currentPath = currentPath.slice(0, -10); // Removes the last 10 characters ("/index.html")
-    }
-    let address = currentPath + "stars?id=" + suggestion["data"]["id"];
+
+    let address = "stars?id=" + suggestion["data"]["id"];
     window.location.href = address;
 }
 
