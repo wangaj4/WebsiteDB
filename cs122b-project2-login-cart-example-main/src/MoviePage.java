@@ -53,10 +53,8 @@ public class MoviePage extends HttpServlet{
         if (request.getParameter("reset") != null && request.getParameter("reset").equals("true")){
             session.setAttribute("page", null);
             session.setAttribute("Genre", null);
-            session.setAttribute("start",null);
             session.setAttribute("Title", null);
             session.setAttribute("Director", null);
-            session.setAttribute("Year", null);
             session.setAttribute("Full", null);
             response.sendRedirect("index.html");
             return;
@@ -82,15 +80,6 @@ public class MoviePage extends HttpServlet{
             //String query = "SELECT * from movies left join ratings on id = movieId ORDER BY rating DESC limit 20";
             String query = "SELECT * from movies left join ratings on id = movieId WHERE TRUE";
 
-
-            String Year = request.getParameter("Year");
-            if (Year == null || Year == "") {
-                Year = (String) session.getAttribute("Year");
-            }
-            if(Year != null){
-                query += " AND movies.year = " + Year;
-                session.setAttribute("Year", Year);
-            }
 
             String Director = request.getParameter("Director");
             if(Director == null || Director == ""){
@@ -122,11 +111,12 @@ public class MoviePage extends HttpServlet{
                         "AND genres_in_movies.movieId = m.id " +
                         "AND genres.name = '" + Genre + "'";
                 session.setAttribute("Genre", Genre);
-                session.setAttribute("start",null);
                 session.setAttribute("Title", null);
                 session.setAttribute("Director", null);
-                session.setAttribute("Year", null);
                 session.setAttribute("Full", null);
+                Title = null;
+                Genre = null;
+                Director = null;
             }
 
 
@@ -139,6 +129,12 @@ public class MoviePage extends HttpServlet{
                 Full = (String) session.getAttribute("Full");
             }
             if(Full != null){
+                session.setAttribute("Genre", null);
+                session.setAttribute("Title", null);
+                session.setAttribute("Director", null);
+                Title = null;
+                Genre = null;
+                Director = null;
                 //loop over each word in full text search
                 String[] searchTerms = Full.split("\\s+");
 
@@ -207,7 +203,10 @@ public class MoviePage extends HttpServlet{
                 out.println("<h4>Showing Movies with Director: "+ Director + "</h4>");
 
             }
+            else if(Full != null){
+                out.println("<h4>Showing Movies with Keywords: "+ Full + "</h4>");
 
+            }
 
             //Change number of results per page
             out.println("<h4>Current results per page: "+ Integer.toString(perPage) + "</h4>");
@@ -307,7 +306,7 @@ public class MoviePage extends HttpServlet{
                     if (index != 0) {
                         out.println(",");
                     }
-                    out.println("<a href=\"MovieList?Genre=" + x.get(0) + "\">" + x.get(1) + "</a>");
+                    out.println("<a href=\"MovieList?Genre=" + x.get(1) + "\">" + x.get(1) + "</a>");
                     index+=1;
                 }
                 out.println("</td>");

@@ -5,7 +5,6 @@ const toggle = document.getElementById('toggle');
 const toggleButton = document.getElementById('toggleButton');
 const genre = document.getElementById('genre');
 const darken = document.querySelectorAll('.darken');
-const carouselBlocks = document.getElementsByClassName('carousel-block');
 const searches = document.getElementsByClassName('autocomplete-searchbox');
 
 const suggestions = document.getElementsByClassName('autocomplete-suggestions');
@@ -24,9 +23,7 @@ $(document).ready(function() {
             toggle.classList.remove("dark-buttons");
             toggleButton.classList.remove("toggleButtonSwap");
             genre.classList.remove("dark-buttons");
-            for(let i = 0;i<carouselBlocks.length;i++){
-                carouselBlocks[i].classList.remove('dark-navbar');
-            }
+
             for(let i = 0;i<searches.length;i++){
                 searches[i].classList.remove('autocomplete-dark');
             }
@@ -56,9 +53,7 @@ $(document).ready(function() {
             toggle.classList.add("dark-buttons");
             toggleButton.classList.add("toggleButtonSwap");
             genre.classList.add("dark-buttons");
-            for(let i = 0;i<carouselBlocks.length;i++){
-                carouselBlocks[i].classList.add('dark-navbar');
-            }
+
             for(let i = 0;i<searches.length;i++){
                 searches[i].classList.add('autocomplete-dark');
             }

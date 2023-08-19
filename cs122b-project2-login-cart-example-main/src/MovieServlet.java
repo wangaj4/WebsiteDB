@@ -59,16 +59,35 @@ public class MovieServlet extends HttpServlet {
         out.println("                <span class=\"bar\"></span>");
         out.println("                <span class=\"bar\"></span>");
         out.println("            </div>");
-        out.println("            <img src=\"img/logoblack.png\" class=\"logo\" id=\"logo\">");
+        out.println("            <a href = \"./\" class = \"logo\"><img src=\"img/logoblack.png\" id=\"logo\"></a>");
         out.println("            <div class=\"navbar-content\">");
 
         out.println("                <form ACTION=\"MovieList\" class=\"genres\">");
         out.println("                    <select id=\"genre\" name=\"Genre\" class=\"select-form\">");
         out.println("                        <option value=\"\">Browse Genre</option>");
-        out.println("                        <option value=\"Action\">Action</option>");
-        out.println("                        <option value=\"Adult\">Adult</option>");
-        out.println("                        <option value=\"Adventure\">Adventure</option>");
-        out.println("                        <!-- Add more options here -->");
+        out.println("                           <option value=\"Action\">Action</option>");
+        out.println("                           <option value=\"Adult\">Adult</option>");
+        out.println("                           <option value=\"Adventure\">Adventure</option>");
+        out.println("                           <option value=\"Animation\">Animation</option>");
+        out.println("                           <option value=\"Biography\">Biography</option>");
+        out.println("                           <option value=\"Comedy\">Comedy</option>");
+        out.println("                           <option value=\"Crime\">Crime</option>");
+        out.println("                           <option value=\"Documentary\">Documentary</option>");
+        out.println("                           <option value=\"Drama\">Drama</option>");
+        out.println("                           <option value=\"Family\">Family</option>");
+        out.println("                           <option value=\"Fantasy\">Fantasy</option>");
+        out.println("                           <option value=\"History\">History</option>");
+        out.println("                           <option value=\"Horror\">Horror</option>");
+        out.println("                           <option value=\"Music\">Music</option>");
+        out.println("                           <option value=\"Musical\">Musical</option>");
+        out.println("                           <option value=\"Mystery\">Mystery</option>");
+        out.println("                           <option value=\"Reality-TV\">Reality-TV</option>");
+        out.println("                           <option value=\"Romance\">Romance</option>");
+        out.println("                           <option value=\"Sci-Fi\">Sci-Fi</option>");
+        out.println("                           <option value=\"Sport\">Sport</option>");
+        out.println("                           <option value=\"Thriller\">Thriller</option>");
+        out.println("                           <option value=\"War\">War</option>");
+        out.println("                           <option value=\"Western\">Western</option>");
         out.println("                    </select>");
         out.println("                </form>");
         out.println("                <input type=\"text\" id=\"autocomplete\"");
@@ -91,12 +110,17 @@ public class MovieServlet extends HttpServlet {
 
             String id = request.getParameter("id");
 
+            if (request.getParameter("success") != null && request.getParameter("success").equals("1")){
+                out.println("<div class = \"results-addcart\" style = \"justify-content:center\"><p>Successfully added to cart</p></div>");
+
+            }
 
             out.println("<div class = \"results-addcart\">");
-            out.println("<a href=\"MovieList\" class = \"results\"> " + "Back to Results" + "</a>");
-            out.println("<form method='post' class = \"results cart-form\" action='Movie?id=" + id + "'>");
-            out.println("<button type='submit'>Add To Cart</button>");
+            out.println("<a href=\"MovieList\" class = \"results darken\"> " + "< Back to Results" + "</a>");
+            out.println("<form method='post' class = \"cart-form\" action='Movie?id=" + id + "'>");
+            out.println("<button type='submit' >Add To Cart</button>");
             out.println("</div>");
+
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
 
@@ -114,14 +138,7 @@ public class MovieServlet extends HttpServlet {
                 resultSet.next();
 
                 out.println("<div class = \"star-container darken\">");
-                out.println("   <table border>");
-                out.println("   <tr>");
-                out.println("   <td>Title</a></td>");
-                out.println("   <td>Year</td>");
-                out.println("   <td>Director</td>");
-                out.println("   <td>Rating</td>");
-                out.println("   </tr>");
-                out.println("   </div>");
+
 
                 String title = resultSet.getString("title");
                 titleName = title;
@@ -129,18 +146,23 @@ public class MovieServlet extends HttpServlet {
                 String year = resultSet.getString("year");
                 String director = resultSet.getString("director");
                 String rating = resultSet.getString("rating");
+                if(rating==null){
+                    rating = "None";
+                }
 
 
 
+                out.println("   <h1>" + title + "</h1>");
 
-                out.println("   <tr>");
-                out.println("   <td>" + title + "</td>");
-                out.println("   <td>" + year + "</td>");
-                out.println("   <td>" + director + "</td>");
-                out.println("   <td>" + rating + "</td>");
-                out.println("   </tr>");
+                out.println("<label class = 'only-left-margin smalltext' ><b>Release Year</b></label>");
+                out.println("   <h2 class = 'only-left-margin' >" + year + "</h1><p></p>");
 
-                out.println("   </table>");
+                out.println("<label class = 'only-left-margin smalltext' ><b>Director</b></label>");
+                out.println("   <h2 class = 'only-left-margin' >" + director + "</h1><p></p>");
+
+                out.println("<label class = 'only-left-margin smalltext' ><b>Rating</b></label>");
+                out.println("   <h2 class = 'only-left-margin' >" + rating + "</h1><p></p>");
+
 
 
                 //Show all stars in the movie
@@ -154,11 +176,11 @@ public class MovieServlet extends HttpServlet {
 
                 String starName = starSet.getString("name");
                 String starId = starSet.getString("id");
-                out.println("<p><a href=\"stars?id=" + starId + "\">" + starName + "</a></p>");
+                out.println("<a href=\"stars?id=" + starId + "\">" + starName + "</a>");
                 while (starSet.next()) {
                     starName = starSet.getString("name");
                     starId = starSet.getString("id");
-                    out.println("<p><a href=\"stars?id=" + starId + "\">" + starName + "</a></p>");
+                    out.println("<a href=\"stars?id=" + starId + "\">" + starName + "</a>");
 
                 }
 
@@ -181,12 +203,13 @@ public class MovieServlet extends HttpServlet {
                 genreSet.close();
 
 
-                out.println("</form>");
                 out.println("</div>");
 
-                if (request.getParameter("success") != null && request.getParameter("success").equals("1")){
-                    out.println("<p>Success!</p>");
-                }
+
+
+
+
+
 
             }else {
                 out.println("<h1>No ID found</h1>");
@@ -215,6 +238,7 @@ public class MovieServlet extends HttpServlet {
         out.println("<script src=\"./toggle.js\"></script>");
         out.println("<script src=\"./select.js\"></script>");
         out.println("<script src=\"./navbarToggle.js\"></script>");
+
         out.println("</body>");
         out.println("</html>");
         out.close();

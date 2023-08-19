@@ -24,7 +24,7 @@
                 <span class="bar"></span>
                 <span class="bar"></span>
             </div>
-            <img src = "img/logoblack.png" class = "logo" id = "logo">
+            <a href = "./" class = "logo"><img src = "img/logoblack.png"id = "logo"></a>
             <div class = "navbar-content">
 
                 <form ACTION="MovieList" class = "genres">
@@ -41,7 +41,6 @@
                         <option value="Drama">Drama</option>
                         <option value="Family">Family</option>
                         <option value="Fantasy">Fantasy</option>
-                        <option value="Genre1">Genre1</option>
                         <option value="History">History</option>
                         <option value="Horror">Horror</option>
                         <option value="Music">Music</option>
@@ -73,34 +72,43 @@
 
         <div class = "search-container">
             <div class = "carousel-block" id = "block1">
-                <h1>Search for Movies by Title</h1>
-                <input type="text" name="hero"
+
+                <h1>Search Movies by Title</h1>
+                <input type="text"
                        class="autocomplete-searchbox" id = "title_autocomplete"
                        placeholder="Search movies by title..."/>
+
             </div>
 
             <div class = "carousel-block" id = "block2">
                 <h1>Search Movies by Director</h1>
-                <input type="text" name="hero"
+                <input type="text"
                        class="autocomplete-searchbox" id = "director_autocomplete"
                        placeholder="Search movies by director..."/>
             </div>
 
             <div class = "carousel-block" id = "block3">
+
                 <h1>Search Actors</h1>
-                <input type="text" name="hero" id="actor_autocomplete"
+                <input type="text" id="actor_autocomplete"
                        class="autocomplete-searchbox form-control"
                        placeholder="Search actors"/>
+
+
             </div>
 
+            <div class="search-tabs">
+                <button class="tab-button active" data-target="block1">Title Search</button>
+                <button class="tab-button" data-target="block2">Search by Director</button>
+                <button class="tab-button" data-target="block3">Actor Search</button>
+            </div>
+
+
         </div>
 
 
-        <div class="search-tabs">
-            <button class="tab-button active" data-target="block1">Title Search</button>
-            <button class="tab-button" data-target="block2">Search by Director</button>
-            <button class="tab-button" data-target="block3">Actor Search</button>
-        </div>
+
+
 
 
         <div class = "navbar-spacer"></div>
