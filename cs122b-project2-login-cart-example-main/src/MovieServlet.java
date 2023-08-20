@@ -108,6 +108,12 @@ public class MovieServlet extends HttpServlet {
 
         try {
 
+            String skip = request.getParameter("skip");
+            if(skip == null){
+                skip = "false";
+            }
+
+
             String id = request.getParameter("id");
 
             if (request.getParameter("success") != null && request.getParameter("success").equals("1")){
@@ -116,7 +122,12 @@ public class MovieServlet extends HttpServlet {
             }
 
             out.println("<div class = \"results-addcart\">");
-            out.println("<a href=\"MovieList\" class = \"results darken\"> " + "< Back to Results" + "</a>");
+
+            if(skip.equals("true")){
+                out.println("<a href=\"./\" class = \"results darken\"> " + "< Back to Search" + "</a>");
+            }else{
+                out.println("<a href=\"MovieList\" class = \"results darken\"> " + "< Back to Results" + "</a>");
+            }
             out.println("<form method='post' class = \"cart-form\" action='Movie?id=" + id + "'>");
             out.println("<button type='submit' >Add To Cart</button>");
             out.println("</div>");
@@ -140,6 +151,7 @@ public class MovieServlet extends HttpServlet {
                 out.println("<div class = \"star-container darken\">");
 
 
+                out.println("<div class = \"main-container\">");
                 String title = resultSet.getString("title");
                 titleName = title;
                 movieID = resultSet.getString("id");
@@ -151,7 +163,7 @@ public class MovieServlet extends HttpServlet {
                 }
 
 
-
+                out.println("<div class = \"left-container\">");
                 out.println("   <h1>" + title + "</h1>");
 
                 out.println("<label class = 'only-left-margin smalltext' ><b>Release Year</b></label>");
@@ -163,8 +175,27 @@ public class MovieServlet extends HttpServlet {
                 out.println("<label class = 'only-left-margin smalltext' ><b>Rating</b></label>");
                 out.println("   <h2 class = 'only-left-margin' >" + rating + "</h1><p></p>");
 
+                out.println("</div>");
+                out.println("<div class = \"right-container\">");
+                out.println("<h2>Genres:</h2>");
+                String genre = "SELECT name FROM genres left join genres_in_movies on id = genreId WHERE movieId = ? ORDER BY name";
+                statement = connection.prepareStatement(genre);
+                statement.setString(1,id);
+                ResultSet genreSet = statement.executeQuery();
 
 
+                genreSet.next();
+                String genreString = genreSet.getString("name");
+                out.println("<a href=\"MovieList?Genre=" + genreString + "\" target = \"_blank\">" + genreString + "<br></a>");
+                while (genreSet.next()) {
+                    genreString = genreSet.getString("name");
+                    out.println("<a href=\"MovieList?Genre=" + genreString + "\" target = \"_blank\">" + genreString + "<br></a>");
+                }
+                genreSet.close();
+
+
+                out.println("</div>");
+                out.println("</div>");
                 //Show all stars in the movie
                 String star = "SELECT * FROM stars left join stars_in_movies on id = starId WHERE movieId = ? ORDER BY name";
                 statement = connection.prepareStatement(star);
@@ -172,36 +203,43 @@ public class MovieServlet extends HttpServlet {
                 ResultSet starSet = statement.executeQuery();
 
                 out.println("   <h2>Actors:</h2>");
+                out.println("<div class = \"actor_grid\">");
+
+
+
                 starSet.next();
 
                 String starName = starSet.getString("name");
                 String starId = starSet.getString("id");
-                out.println("<a href=\"stars?id=" + starId + "\">" + starName + "</a>");
+                out.println("<a href=\"stars?id=" + starId + "&skip=true\" target = \"_blank\">" + starName + "</a>");
                 while (starSet.next()) {
                     starName = starSet.getString("name");
                     starId = starSet.getString("id");
-                    out.println("<a href=\"stars?id=" + starId + "\">" + starName + "</a>");
+                    out.println("<a href=\"stars?id=" + starId + "&skip=true\" target = \"_blank\">" + starName + "</a>");
 
                 }
+                out.println("</div>");
 
 
 
-                //Show all genres in the movie
-                String genre = "SELECT name FROM genres left join genres_in_movies on id = genreId WHERE movieId = ? ORDER BY name";
-                statement = connection.prepareStatement(genre);
-                statement.setString(1,id);
-                ResultSet genreSet = statement.executeQuery();
-                out.println("<h2>Genres:</h2>");
-
-                genreSet.next();
-                String genreString = genreSet.getString("name");
-                out.println("<p><a href=\"MovieList?Genre=" + genreString + "\">" + genreString + "</a></p>");
-                while (genreSet.next()) {
-                    genreString = genreSet.getString("name");
-                    out.println("<p><a href=\"MovieList?Genre=" + genreString + "\">" + genreString + "</a></p>");
-                }
-                genreSet.close();
-
+//                out.println("<h2>Genres:</h2>");
+//                out.println("<div class = \"genre_grid\">");
+//                //Show all genres in the movie
+//                String genre = "SELECT name FROM genres left join genres_in_movies on id = genreId WHERE movieId = ? ORDER BY name";
+//                statement = connection.prepareStatement(genre);
+//                statement.setString(1,id);
+//                ResultSet genreSet = statement.executeQuery();
+//
+//
+//                genreSet.next();
+//                String genreString = genreSet.getString("name");
+//                out.println("<a href=\"MovieList?Genre=" + genreString + "\" target = \"_blank\">" + genreString + "</a>");
+//                while (genreSet.next()) {
+//                    genreString = genreSet.getString("name");
+//                    out.println("<a href=\"MovieList?Genre=" + genreString + "\" target = \"_blank\">" + genreString + "</a>");
+//                }
+//                genreSet.close();
+//                out.println("</div>");
 
                 out.println("</div>");
 

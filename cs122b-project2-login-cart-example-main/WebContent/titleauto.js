@@ -38,7 +38,7 @@ function title_handleLookupAjaxSuccess(data, query, doneCallback) {
 
 function title_handleSelectSuggestion(suggestion) {
 
-    let address = "Movie?id=" + suggestion["data"]["id"];
+    let address = "Movie?id=" + suggestion["data"]["id"] + "&skip=true";;
     window.location.href = address;
 }
 

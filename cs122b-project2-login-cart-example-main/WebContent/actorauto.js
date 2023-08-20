@@ -54,7 +54,7 @@ function actor_handleLookupAjaxSuccess(data, query, doneCallback) {
  */
 function actor_handleSelectSuggestion(suggestion) {
 
-    let address = "stars?id=" + suggestion["data"]["id"];
+    let address = "stars?id=" + suggestion["data"]["id"] + "&skip=true";;
     window.location.href = address;
 }
 

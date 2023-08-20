@@ -1,6 +1,5 @@
 const cover = document.getElementById('back');
 const logo = document.getElementById('logo');
-const cartButton = document.getElementById('cart');
 const toggle = document.getElementById('toggle');
 const toggleButton = document.getElementById('toggleButton');
 const genre = document.getElementById('genre');
@@ -10,6 +9,10 @@ const searches = document.getElementsByClassName('autocomplete-searchbox');
 const suggestions = document.getElementsByClassName('autocomplete-suggestions');
 const tabs = document.querySelectorAll('.tab-button');
 const bars = document.querySelectorAll('.bar');
+
+const actorGrid = document.querySelectorAll('.actor_grid');
+const genreGrid = document.querySelectorAll('.genre_grid');
+
 
 $(document).ready(function() {
 
@@ -41,6 +44,14 @@ $(document).ready(function() {
                 element.classList.remove('dark-navbar');
             });
 
+            actorGrid.forEach(element =>{
+                element.classList.remove('actor_grid_darken');
+            });
+
+            genreGrid.forEach(element =>{
+                element.classList.remove('genre_grid_darken');
+            });
+
             revert_selected();
 
 
@@ -69,6 +80,12 @@ $(document).ready(function() {
             });
             darken.forEach(element =>{
                 element.classList.add('dark-navbar');
+            });
+            actorGrid.forEach(element =>{
+                element.classList.add('actor_grid_darken');
+            });
+            genreGrid.forEach(element =>{
+                element.classList.add('genre_grid_darken');
             });
 
             change_selected();

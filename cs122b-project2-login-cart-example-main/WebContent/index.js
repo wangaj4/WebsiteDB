@@ -53,7 +53,10 @@ function handleLookupAjaxSuccess(data, query, doneCallback) {
  * You can redirect to the page you want using the suggestion data.
  */
 function handleSelectSuggestion(suggestion) {
-    let address = "Movie?id=" + suggestion["data"]["id"];
+
+    //Let the backend know that the user didn't go see a results page, "back to results" should be "back to search"
+
+    let address = "Movie?id=" + suggestion["data"]["id"] + "&skip=true";
     window.location.href = address;
 }
 
