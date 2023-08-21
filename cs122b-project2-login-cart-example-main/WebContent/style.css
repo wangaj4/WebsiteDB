@@ -42,7 +42,7 @@
 html, body {
     height:100%;
     margin:0;
-
+    background: black;
 }
 
 .cover{
@@ -692,9 +692,6 @@ html, body {
 }
 
 
-.no-transition{
-    transition: all 0s;
-}
 
 
 
@@ -816,5 +813,8 @@ html, body {
 
 
 
+.no-transition{
+    transition: none !important;
+}
 
 

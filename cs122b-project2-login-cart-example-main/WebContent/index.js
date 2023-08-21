@@ -91,13 +91,10 @@ $('#autocomplete').keypress(function(event) {
     }
 })
 
-
-
-
-
-
-window.addEventListener("popstate", function() {
-    location.reload(true);
-});
-
+//
+// window.addEventListener('pageshow', function(event) {
+//     if (event.persisted) {
+//         window.location.reload(); // Reload the page when using the back button
+//     }
+// });
 

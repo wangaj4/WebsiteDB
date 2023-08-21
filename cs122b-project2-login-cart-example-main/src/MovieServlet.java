@@ -38,6 +38,10 @@ public class MovieServlet extends HttpServlet {
         // Get the PrintWriter for writing response
         PrintWriter out = response.getWriter();
 
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
