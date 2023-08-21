@@ -56,7 +56,7 @@ public class MoviePage extends HttpServlet{
             session.setAttribute("Title", null);
             session.setAttribute("Director", null);
             session.setAttribute("Full", null);
-            response.sendRedirect("index.html");
+            response.sendRedirect("./");
             return;
         }
 
@@ -92,7 +92,7 @@ public class MoviePage extends HttpServlet{
         out.println("                <span class=\"bar\"></span>");
         out.println("                <span class=\"bar\"></span>");
         out.println("            </div>");
-        out.println("            <a href = \"./\" class = \"logo\"><img src=\"img/logoblack.png\" id=\"logo\"></a>");
+        out.println("            <a href=\"MovieList?reset=true\" class = \"logo\"><img src=\"img/logoblack.png\" id=\"logo\"></a>");
         out.println("            <div class=\"navbar-content\">");
 
         out.println("                <form ACTION=\"MovieList\" class=\"genres\">");
@@ -289,17 +289,18 @@ public class MoviePage extends HttpServlet{
 
 
 
-            out.println("<table border>");
+            out.println("<div class = \"table-container darken\">");
+            out.println("<table border class = \"styled-table\" >");
 
             // Add table header row
             {
                 out.println("<tr>");
-                out.println("<td>Title</a></td>");
-                out.println("<td>Year</td>");
-                out.println("<td>Director</td>");
-                out.println("<td>Genres</td>");
-                out.println("<td>Stars</td>");
-                out.println("<td>Rating</td>");
+                out.println("<th>Title</a></th>");
+                out.println("<th>Year</th>");
+                out.println("<th>Director</th>");
+                out.println("<th>Genres</th>");
+                out.println("<th>Stars</th>");
+                out.println("<th>Rating</th>");
                 out.println("</tr>");
             }
 
@@ -397,7 +398,10 @@ public class MoviePage extends HttpServlet{
                 out.println("</tr>");
             }
 
+
             out.println("</table>");
+
+            out.println("</div>");
             out.println("</body>");
 
 

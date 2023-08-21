@@ -59,7 +59,7 @@ public class StarServlet extends HttpServlet {
         out.println("                <span class=\"bar\"></span>");
         out.println("                <span class=\"bar\"></span>");
         out.println("            </div>");
-        out.println("            <a href = \"./\" class = \"logo\"><img src=\"img/logoblack.png\" id=\"logo\"></a>");
+        out.println("            <a href=\"MovieList?reset=true\" class = \"logo\"><img src=\"img/logoblack.png\" id=\"logo\"></a>");
         out.println("            <div class=\"navbar-content\">");
 
         out.println("                <form ACTION=\"MovieList\" class=\"genres\">");
