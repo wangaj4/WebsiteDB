@@ -206,7 +206,7 @@ public class MovieServlet extends HttpServlet {
                 statement.setString(1,id);
                 ResultSet starSet = statement.executeQuery();
 
-                out.println("   <h2>Actors:</h2>");
+                out.println("   <h2 ALIGN = \"center\">Actors:</h2>");
                 out.println("<div class = \"actor_grid\">");
 
 
@@ -224,26 +224,6 @@ public class MovieServlet extends HttpServlet {
                 }
                 out.println("</div>");
 
-
-
-//                out.println("<h2>Genres:</h2>");
-//                out.println("<div class = \"genre_grid\">");
-//                //Show all genres in the movie
-//                String genre = "SELECT name FROM genres left join genres_in_movies on id = genreId WHERE movieId = ? ORDER BY name";
-//                statement = connection.prepareStatement(genre);
-//                statement.setString(1,id);
-//                ResultSet genreSet = statement.executeQuery();
-//
-//
-//                genreSet.next();
-//                String genreString = genreSet.getString("name");
-//                out.println("<a href=\"MovieList?Genre=" + genreString + "\" target = \"_blank\">" + genreString + "</a>");
-//                while (genreSet.next()) {
-//                    genreString = genreSet.getString("name");
-//                    out.println("<a href=\"MovieList?Genre=" + genreString + "\" target = \"_blank\">" + genreString + "</a>");
-//                }
-//                genreSet.close();
-//                out.println("</div>");
 
                 out.println("</div>");
 

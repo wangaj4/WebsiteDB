@@ -11,7 +11,7 @@ const tabs = document.querySelectorAll('.tab-button');
 const bars = document.querySelectorAll('.bar');
 
 const actorGrid = document.querySelectorAll('.actor_grid');
-const genreGrid = document.querySelectorAll('.genre_grid');
+const movieGrid = document.querySelectorAll('.movie_grid');
 
 
 $(document).ready(function() {
@@ -95,8 +95,8 @@ function light(){
         element.classList.remove('actor_grid_darken');
     });
 
-    genreGrid.forEach(element =>{
-        element.classList.remove('genre_grid_darken');
+    movieGrid.forEach(element =>{
+        element.classList.remove('movie_grid_darken');
     });
 
     revert_selected();
@@ -129,8 +129,8 @@ function dark(){
     actorGrid.forEach(element =>{
         element.classList.add('actor_grid_darken');
     });
-    genreGrid.forEach(element =>{
-        element.classList.add('genre_grid_darken');
+    movieGrid.forEach(element =>{
+        element.classList.add('movie_grid_darken');
     });
 
     change_selected();
