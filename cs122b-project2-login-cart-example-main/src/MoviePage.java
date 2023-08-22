@@ -51,7 +51,6 @@ public class MoviePage extends HttpServlet{
 
         HttpSession session = request.getSession();
         if (request.getParameter("reset") != null && request.getParameter("reset").equals("true")){
-            session.setAttribute("page", null);
             session.setAttribute("Genre", null);
             session.setAttribute("Title", null);
             session.setAttribute("Director", null);
@@ -145,62 +144,51 @@ public class MoviePage extends HttpServlet{
             //String query = "SELECT * from movies left join ratings on id = movieId ORDER BY rating DESC limit 20";
             String query = "SELECT * from movies left join ratings on id = movieId WHERE TRUE";
 
-            boolean hasParameter = false;
+
+
 
             String Director = request.getParameter("Director");
-            if(Director == null || Director == ""){
+            String Title = request.getParameter("Title");
+            String Genre = request.getParameter("Genre");
+            String Full = request.getParameter("Full");
+            boolean fts = false;
+            String fullTextSearch = "";
+
+            if(Director == null && Title == null && Genre == null && Full == null){
+                //if url is naked, check session to get last searched thing
                 Director = (String) session.getAttribute("Director");
+                Title = (String) session.getAttribute("Title");
+                Genre = (String) session.getAttribute("Genre");
+                Full = (String) session.getAttribute("Full");
+            }else{
+                //if one of those strings isn't null, that means the url has a parameter, which means
+                //it's a new search. clear session.
+                session.setAttribute("Title", null);
+                session.setAttribute("Director", null);
+                session.setAttribute("Full", null);
+                session.setAttribute("Genre", null);
+                session.setAttribute("page", null);
+
             }
-            if(Director != null){
+
+
+
+
+
+            if(Director != null && !Director.equals("")){
                 query += " AND movies.director LIKE '%" + Director + "%'";
                 session.setAttribute("Director", Director);
-            }
-
-            String Title = request.getParameter("Title");
-            if(Title == null || Title == ""){
-                Title = (String) session.getAttribute("Title");
-            }
-            if(Title != null){
+            }else if(Title != null && !Title.equals("")){
                 query += " AND movies.title LIKE '%" + Title + "%'";
                 session.setAttribute("Title", Title);
-            }
-
-
-            //If genre parameter exists, change query to find matching genre movies instead
-            String Genre = request.getParameter("Genre");
-            if(Genre == null || Genre == ""){
-                Genre = (String) session.getAttribute("Genre");
-            }
-            if(Genre != null){
+            }else if(Genre != null && !Genre.equals("")){
                 query = "SELECT m.id, m.title, m.year, m.director, r.rating FROM movies m left join ratings r on m.id = r.movieId, " +
                         "genres, genres_in_movies WHERE genres.id = genres_in_movies.genreId " +
                         "AND genres_in_movies.movieId = m.id " +
                         "AND genres.name = '" + Genre + "'";
                 session.setAttribute("Genre", Genre);
-                session.setAttribute("Title", null);
-                session.setAttribute("Director", null);
-                session.setAttribute("Full", null);
-                Title = null;
-                Genre = null;
-                Director = null;
-            }
+            }else if(Full != null && !Full.equals("")){
 
-
-            //Full text search overrides
-            String Full = request.getParameter("Full");
-            boolean fts = false;
-            String fullTextSearch = "";
-
-            if(Full == null || Full == ""){
-                Full = (String) session.getAttribute("Full");
-            }
-            if(Full != null){
-                session.setAttribute("Genre", null);
-                session.setAttribute("Title", null);
-                session.setAttribute("Director", null);
-                Title = null;
-                Genre = null;
-                Director = null;
                 //loop over each word in full text search
                 String[] searchTerms = Full.split("\\s+");
 
@@ -210,10 +198,76 @@ public class MoviePage extends HttpServlet{
                 query = "SELECT * FROM movies m left join ratings r ON m.id = r.movieId WHERE MATCH(m.title) AGAINST (? IN BOOLEAN MODE)";
                 fts = true;
                 session.setAttribute("Full", Full);
-
             }
 
-            out.println("<body>");
+            {
+//            String Director = request.getParameter("Director");
+//            if(Director == null || Director == ""){
+//                Director = (String) session.getAttribute("Director");
+//            }
+//            if(Director != null){
+//                query += " AND movies.director LIKE '%" + Director + "%'";
+//                session.setAttribute("Director", Director);
+//            }
+//
+//            String Title = request.getParameter("Title");
+//            if(Title == null || Title == ""){
+//                Title = (String) session.getAttribute("Title");
+//            }
+//            if(Title != null){
+//                query += " AND movies.title LIKE '%" + Title + "%'";
+//                session.setAttribute("Title", Title);
+//            }
+//
+//
+//            //If genre parameter exists, change query to find matching genre movies instead
+//            String Genre = request.getParameter("Genre");
+//            if(Genre == null || Genre == ""){
+//                Genre = (String) session.getAttribute("Genre");
+//            }
+//            if(Genre != null){
+//                query = "SELECT m.id, m.title, m.year, m.director, r.rating FROM movies m left join ratings r on m.id = r.movieId, " +
+//                        "genres, genres_in_movies WHERE genres.id = genres_in_movies.genreId " +
+//                        "AND genres_in_movies.movieId = m.id " +
+//                        "AND genres.name = '" + Genre + "'";
+//                session.setAttribute("Genre", Genre);
+//                session.setAttribute("Title", null);
+//                session.setAttribute("Director", null);
+//                session.setAttribute("Full", null);
+//                Title = null;
+//                Genre = null;
+//                Director = null;
+//            }
+//
+//
+//            //Full text search overrides
+//            String Full = request.getParameter("Full");
+//            boolean fts = false;
+//            String fullTextSearch = "";
+//
+//            if(Full == null || Full == ""){
+//                Full = (String) session.getAttribute("Full");
+//            }
+//            if(Full != null){
+//                session.setAttribute("Genre", null);
+//                session.setAttribute("Title", null);
+//                session.setAttribute("Director", null);
+//                Title = null;
+//                Genre = null;
+//                Director = null;
+//                //loop over each word in full text search
+//                String[] searchTerms = Full.split("\\s+");
+//
+//                for (String term : searchTerms) {
+//                    fullTextSearch += "+" + term + "* ";
+//                }
+//                query = "SELECT * FROM movies m left join ratings r ON m.id = r.movieId WHERE MATCH(m.title) AGAINST (? IN BOOLEAN MODE)";
+//                fts = true;
+//                session.setAttribute("Full", Full);
+//
+//            }
+            }
+
 
 
 
@@ -254,8 +308,8 @@ public class MoviePage extends HttpServlet{
 
             ResultSet resultSet = statement.executeQuery();
 
-            out.println("<td><a href=\"MovieList?reset=true\">" + "Back to Movie Search" + "</a></td>");
 
+            out.println("<body>");
             out.println("<h1>Found Movies</h1>");
 
             //Display active filters
@@ -362,7 +416,7 @@ public class MoviePage extends HttpServlet{
                 out.println("<tr>");
                 out.println("<td><a href=\"Movie?id=" + movieid + "\">" + title + "</a></td>");
                 out.println("<td>" + year + "</td>");
-                out.println("<td>" + director + "</td>");
+                out.println("<td><a href=\"MovieList?Director=" + director + "\">" + director + "</a></td>");
 
 
                 //Find first three genres
