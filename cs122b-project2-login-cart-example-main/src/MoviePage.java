@@ -523,6 +523,7 @@ public class MoviePage extends HttpServlet{
         out.println("<script src=\"./toggle.js\"></script>");
         out.println("<script src=\"./select.js\"></script>");
         out.println("<script src=\"./navbarToggle.js\"></script>");
+        out.println("<script src=\"./cart.js\"></script>");
 
         out.println("</body>");
         out.println("</html>");
