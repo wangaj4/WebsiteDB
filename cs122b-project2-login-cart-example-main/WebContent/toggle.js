@@ -13,6 +13,7 @@ const bars = document.querySelectorAll('.bar');
 const actorGrid = document.querySelectorAll('.actor_grid');
 const movieGrid = document.querySelectorAll('.movie_grid');
 
+let r = document.querySelector(':root');
 
 $(document).ready(function() {
     jQuery.ajax({
@@ -74,6 +75,11 @@ function light(){
     toggleButton.classList.remove("toggleButtonSwap");
     genre.classList.remove("dark-buttons");
 
+    r.style.setProperty('--whitesmoke-gray', 'whitesmoke');
+    r.style.setProperty('--auto-strong', '#3399FF');
+    r.style.setProperty('--auto-selected', '#B8B8B8');
+
+
     for(let i = 0;i<searches.length;i++){
         searches[i].classList.remove('autocomplete-dark');
     }
@@ -99,7 +105,7 @@ function light(){
         element.classList.remove('movie_grid_darken');
     });
 
-    revert_selected();
+
 }
 
 function dark(){
@@ -109,6 +115,11 @@ function dark(){
     toggle.classList.add("dark-buttons");
     toggleButton.classList.add("toggleButtonSwap");
     genre.classList.add("dark-buttons");
+
+    r.style.setProperty('--whitesmoke-gray', 'gray');
+    r.style.setProperty('--auto-strong', 'gold');
+    r.style.setProperty('--auto-selected', '#747474');
+
 
     for(let i = 0;i<searches.length;i++){
         searches[i].classList.add('autocomplete-dark');
@@ -133,33 +144,6 @@ function dark(){
         element.classList.add('movie_grid_darken');
     });
 
-    change_selected();
-}
-
-
-
-let newStyleRules = [];
-
-function change_selected(on) {
-    const updatedStyle1 = '.autocomplete-selected { background: #747474; }\n';
-    const updatedStyle2 = '.autocomplete-suggestions strong { color: gold; }\n';
-
-    const styleSheet = document.styleSheets[0];
-
-    // Store the original rules if not already stored
-    if (newStyleRules.length === 0) {
-        newStyleRules.push(styleSheet.insertRule(updatedStyle1, styleSheet.cssRules.length));
-        newStyleRules.push(styleSheet.insertRule(updatedStyle2, styleSheet.cssRules.length));
-    }
 
 }
 
-function revert_selected() {
-    const styleSheet = document.styleSheets[0];
-
-    styleSheet.deleteRule(newStyleRules[0]);
-    styleSheet.deleteRule(newStyleRules[1]-1);
-
-    // Clear the array to indicate that the rules are removed
-    newStyleRules = [];
-}

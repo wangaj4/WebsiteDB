@@ -101,7 +101,8 @@ public class MovieServlet extends HttpServlet {
         out.println("            <button class=\"toggle\" id=\"toggle\">");
         out.println("                <span id=\"toggleButton\" class=\"toggleButton\"></span>");
         out.println("            </button>");
-        out.println("            <a href=\"ShoppingCart\" class=\"cart-button\" id=\"cart\"></a>");
+        out.println("            <div class = \"cart-button\" id = \"cart\"></div>");
+        out.println("            <div class = \"cart-list darken\"></div>");
         out.println("        </div>");
 
         out.println("        <div class=\"navbar-spacer\" id=\"spacer\"></div>");
@@ -120,10 +121,7 @@ public class MovieServlet extends HttpServlet {
 
             String id = request.getParameter("id");
 
-            if (request.getParameter("success") != null && request.getParameter("success").equals("1")){
-                out.println("<div class = \"results-addcart\" style = \"justify-content:center\"><p>Successfully added to cart</p></div>");
 
-            }
 
             out.println("<div class = \"results-addcart\">");
 
@@ -132,10 +130,13 @@ public class MovieServlet extends HttpServlet {
             }else{
                 out.println("<a href=\"MovieList\" class = \"results darken\"> " + "< Back to Results" + "</a>");
             }
-            out.println("<form method='post' class = \"cart-form\" action='Movie?id=" + id + "'>");
+            out.println("<form method='post' class = \"cart-form\" action='Movie?id=" + id + "&skip=" + skip + "'>");
             out.println("<button type='submit' >Add To Cart</button>");
             out.println("</div>");
+            if (request.getParameter("success") != null && request.getParameter("success").equals("1")){
+                out.println("<div class = \"results-addcart\" style = \"justify-content:center\"><p>Successfully added to cart</p></div>");
 
+            }
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
 
@@ -260,6 +261,7 @@ public class MovieServlet extends HttpServlet {
         out.println("<script src=\"./toggle.js\"></script>");
         out.println("<script src=\"./select.js\"></script>");
         out.println("<script src=\"./navbarToggle.js\"></script>");
+        out.println("<script src=\"./cart.js\"></script>");
 
         out.println("</body>");
         out.println("</html>");
@@ -277,7 +279,12 @@ public class MovieServlet extends HttpServlet {
         }
         cart.addToCart(addedMovie);
         session.setAttribute("cart",cart);
+
         String redirectURL = "Movie?id=" + request.getParameter("id") + "&success=1";
+        if(request.getParameter("skip").equals("true")){
+            redirectURL += "&skip=true";
+        }
+
         response.sendRedirect(redirectURL);
 
     }

@@ -129,7 +129,8 @@ public class MoviePage extends HttpServlet{
         out.println("            <button class=\"toggle\" id=\"toggle\">");
         out.println("                <span id=\"toggleButton\" class=\"toggleButton\"></span>");
         out.println("            </button>");
-        out.println("            <a href=\"ShoppingCart\" class=\"cart-button\" id=\"cart\"></a>");
+        out.println("            <div class = \"cart-button\" id = \"cart\"></div>");
+        out.println("            <div class = \"cart-list darken\"></div>");
         out.println("        </div>");
 
         out.println("        <div class=\"navbar-spacer\" id=\"spacer\"></div>");
@@ -199,6 +200,19 @@ public class MoviePage extends HttpServlet{
                 fts = true;
                 session.setAttribute("Full", Full);
             }
+
+            //order by year or rating ascending or descending
+            {
+                //Get parameters from url
+                    //If there are parameters in url then go back to page 1 and remove any other sessions
+
+                //If no parameters are from url check session
+
+                //Based on parameters or url add the proper order by clause
+
+            }
+
+
 
             {
 //            String Director = request.getParameter("Director");
@@ -310,6 +324,9 @@ public class MoviePage extends HttpServlet{
 
 
             out.println("<body>");
+
+            out.println("<div class = \"results-container\">");
+
             out.println("<h1>Found Movies</h1>");
 
             //Display active filters
@@ -317,14 +334,14 @@ public class MoviePage extends HttpServlet{
                 out.println("<h4>Showing Movies with Genre: "+ Genre + "</h4>");
             }
             else if(Title != null){
-                out.println("<h4>Showing Movies with: "+ Title + "</h4>");
+                out.println("<h4>Showing Movies with Title: \""+ Title + "\"</h4>");
             }
             else if(Director != null){
-                out.println("<h4>Showing Movies with Director: "+ Director + "</h4>");
+                out.println("<h4>Showing Movies with Director: \""+ Director + "\"</h4>");
 
             }
             else if(Full != null){
-                out.println("<h4>Showing Movies with Keywords: "+ Full + "</h4>");
+                out.println("<h4>Showing Movies with Keywords: \""+ Full + "\"</h4>");
 
             }
 
@@ -342,6 +359,7 @@ public class MoviePage extends HttpServlet{
             out.println("</form>");
 
 
+            out.println("</div>");
 
             out.println("<div class = \"table-container darken\">");
             out.println("<table border class = \"styled-table\" >");
@@ -421,13 +439,14 @@ public class MoviePage extends HttpServlet{
 
                 //Find first three genres
 
-                out.println("<td>");
+                out.println("<td style = \"line-height:1.5\">");
                 int index = 0;
+                int len = movieGenresMap.get(movieid).size();
                 for (List<String> x : movieGenresMap.get(movieid)){
-                    if (index != 0) {
-                        out.println(",");
-                    }
-                    out.println("<a href=\"MovieList?Genre=" + x.get(1) + "\">" + x.get(1) + "</a>");
+
+                    String comma = "";
+                    if(index != len-1) comma = ",";
+                    out.println("<a href=\"MovieList?Genre=" + x.get(1) + "\">" + x.get(1) + comma + "<br></a>");
                     index+=1;
                 }
                 out.println("</td>");
@@ -436,13 +455,13 @@ public class MoviePage extends HttpServlet{
                 out.println("<td>");
                 index = 0;
                 for (List<String> x : movieStarsMap.get(movieid)){
-                    if (index != 0) {
-                        out.println(",");
-                    }
+
                     if(index==3){
                         break;
                     }
-                    out.println("<a href=\"stars?id=" + x.get(0) + "\">" + x.get(1) + "</a>");
+                    String comma = "";
+                    if(index != 2) comma = ",";
+                    out.println("<a href=\"stars?id=" + x.get(0) + "\">" + x.get(1) + comma + "</a>");
                     index+=1;
                 }
                 out.println("</td>");
@@ -459,20 +478,24 @@ public class MoviePage extends HttpServlet{
             out.println("</body>");
 
 
+            out.println("<div class = \"page-container\">");
             int curr = Integer.parseInt(Page);
             int displayedPage = curr+1;
-            out.println("<h4>Current Page: "+ String.valueOf(displayedPage) + "</h4>");
+            out.println("<h4>Page: " + displayedPage + "</h4>");
 
+
+            out.println("<div style = \"justify-content:space-around;display:flex;\">");
             if (!Page.equals("0")){
                 int prev = curr-1;
-                out.println("<a href=\"MovieList?page=" + prev + "\">" + "Previous Page" + "</a>");
+                out.println("<div><a href=\"MovieList?page=" + prev + "\">" + "< Previous Page" + "</a></div>");
             }
             if(onpage == perPage){
                 int next = curr + 1;
-                out.println("<a href=\"MovieList?page=" + next + "\">" + "Next Page" + "</a>");
+                out.println("<div><a href=\"MovieList?page=" + next + "\">" + "Next Page >" + "</a></div>");
             }
+            out.println("</div>");
 
-
+            out.println("</div>");
 
             resultSet.close();
             genreSet.close();

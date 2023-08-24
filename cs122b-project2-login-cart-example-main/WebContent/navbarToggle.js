@@ -1,5 +1,6 @@
 
 const navbarToggle = document.querySelector('.navbar-toggle');
+
 const navContent = document.querySelector('.navbar-content');
 
 navbarToggle.addEventListener('click', () => {
@@ -8,4 +9,5 @@ navbarToggle.addEventListener('click', () => {
     document.getElementById("spacer").classList.toggle("active");
 
 });
+
 

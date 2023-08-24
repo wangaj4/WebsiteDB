@@ -97,7 +97,8 @@ public class StarServlet extends HttpServlet {
         out.println("            <button class=\"toggle\" id=\"toggle\">");
         out.println("                <span id=\"toggleButton\" class=\"toggleButton\"></span>");
         out.println("            </button>");
-        out.println("            <a href=\"ShoppingCart\" class=\"cart-button\" id=\"cart\"></a>");
+        out.println("            <div class = \"cart-button\" id = \"cart\"></div>");
+        out.println("            <div class = \"cart-list darken\"></div>");
         out.println("        </div>");
 
         out.println("        <div class=\"navbar-spacer\" id=\"spacer\"></div>");
