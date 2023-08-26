@@ -106,23 +106,19 @@ public class ShoppingCart extends HttpServlet {
         HttpSession session = request.getSession();
         CartList cart = (CartList) session.getAttribute("cart");
 
-        String toDelete = request.getParameter("delete");
-        if(toDelete != null){
-            cart.deleteFromCart(toDelete);
-        }
+        String movie = request.getParameter("movie");
 
-        String toAdd = request.getParameter("add");
-        if(toAdd != null){
-            cart.addToCartString(toAdd);
-        }
+        String addOrSub = request.getParameter("value");
 
-        String toRemove = request.getParameter("remove");
-        if(toRemove != null){
-            cart.removeFromCart(toRemove);
+        if(addOrSub.equals("add")){
+            cart.addToCartString(movie);
+        }else if (addOrSub.equals("sub")){
+            cart.removeFromCart(movie);
+        }else if (addOrSub.equals("delete")){
+            cart.deleteFromCart(movie);
         }
 
         session.setAttribute("cart",cart);
-        response.sendRedirect("ShoppingCart");
 
     }
 

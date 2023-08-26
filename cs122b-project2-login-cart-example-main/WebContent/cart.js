@@ -5,17 +5,33 @@ const cartContent = document.querySelector('.cart-list');
 
 
 cartToggle.addEventListener('click', () => {
-
+    cartContent.classList.toggle("active");
     getCart();
 
 });
 
 
+function send(value, movieName){
+
+
+    jQuery.ajax({
+        "method": "POST",
+        "url": "api/shoppingCart",
+        data: {value: value, movie:movieName},
+        "success": function(data) {
+            console.log("sent information to cart backend");
+            getCart();
+        },
+        "error": function(errorData) {
+            console.log("update cart error");
+            console.log(errorData);
+        }
+    })
+}
 
 
 function getCart(){
-    //cartToggle.classList.toggle("active");
-    cartContent.classList.toggle("active");
+
     jQuery.ajax({
         "method": "GET",
         "url": "api/shoppingCart",
@@ -23,7 +39,15 @@ function getCart(){
             var dict = JSON.parse(data);
             console.log(dict);
 
-            if(dict["status"]==="existing"){
+            if(dict["status"] === "empty"){
+                cartContent.innerHTML = '';
+                let emptyNotif = document.createElement("div");
+                emptyNotif.className = "cart-empty";
+                emptyNotif.textContent = "Cart is empty";
+                cartContent.appendChild(emptyNotif);
+
+            }
+            else if(dict["status"]==="existing"){
                 //wipe slate
                 cartContent.innerHTML = '';
                 for (const [key, value] of Object.entries(dict)) {
@@ -37,7 +61,46 @@ function getCart(){
                         test.textContent= "Total Price: " + value;
                     }else{
                         test.className = "cart-item";
-                        test.textContent= key + ": " + value;
+                        let itemParagraph = document.createElement("label");
+                        itemParagraph.textContent = key;
+                        itemParagraph.style.fontWeight = "bold";
+
+
+
+                        let options = document.createElement("div");
+                        options.className = "cart-options";
+                        let subtract = document.createElement("a");
+                        subtract.textContent = "- ";
+                        subtract.onclick = function () {
+
+                            //send post request to backend
+                            send("sub", key);
+                        }
+
+                        let add = document.createElement("a");
+                        add.textContent = " +";
+                        add.onclick = function () {
+
+                            send("add", key);
+                        }
+
+                        options.appendChild(subtract);
+
+                        let count = document.createElement("span");
+                        count.textContent = value;
+                        options.append(count);
+                        options.appendChild(add);
+
+
+
+
+                        let costLabel = document.createElement("label");
+                        costLabel.textContent = "Cost: $" + value * 10;
+
+                        test.appendChild(itemParagraph);
+                        test.appendChild(options);
+                        //test.appendChild(document.createElement("br"));
+                        test.appendChild(costLabel);
                     }
 
                     cartContent.appendChild(test);
@@ -45,6 +108,8 @@ function getCart(){
                 }
 
             }
+
+
 
 
 
