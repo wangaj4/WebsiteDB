@@ -216,11 +216,11 @@ public class MovieServlet extends HttpServlet {
 
                 String starName = starSet.getString("name");
                 String starId = starSet.getString("id");
-                out.println("<a href=\"stars?id=" + starId + "&skip=true\" target = \"_blank\">" + starName + "</a>");
+                out.println("<a href=\"stars?id=" + starId + "&skip=true\" >" + starName + "</a>");
                 while (starSet.next()) {
                     starName = starSet.getString("name");
                     starId = starSet.getString("id");
-                    out.println("<a href=\"stars?id=" + starId + "&skip=true\" target = \"_blank\">" + starName + "</a>");
+                    out.println("<a href=\"stars?id=" + starId + "&skip=true\" >" + starName + "</a>");
 
                 }
                 out.println("</div>");

@@ -169,6 +169,7 @@ public class MoviePage extends HttpServlet{
                 session.setAttribute("Full", null);
                 session.setAttribute("Genre", null);
                 session.setAttribute("page", null);
+                session.setAttribute("order", null);
 
             }
 
@@ -202,15 +203,34 @@ public class MoviePage extends HttpServlet{
             }
 
             //order by year or rating ascending or descending
-            {
-                //Get parameters from url
-                    //If there are parameters in url then go back to page 1 and remove any other sessions
 
-                //If no parameters are from url check session
+            //Get parameters from url
+            String order = request.getParameter("order");
+            if(order == null){
+                //If nothing there, then see if session has order parameter
+                order = (String) session.getAttribute("order");
 
-                //Based on parameters or url add the proper order by clause
-
+            }else {
+                //If order is in url then, set page to 0
+                session.setAttribute("page", "0");
             }
+            if(order!=null){
+                //If parameter is set, page goes back to 0
+
+                if (order.equals("rating")){
+                    query += "ORDER BY rating desc";
+                    session.setAttribute("order", order);
+                }else if (order.equals("year")){
+                    query += "ORDER BY year desc";
+                }
+            }
+
+
+            //If no parameters are from url check session
+
+            //Based on parameters or url add the proper order by clause
+
+
 
 
 
@@ -291,6 +311,8 @@ public class MoviePage extends HttpServlet{
             String Per = request.getParameter("Per");
             if(Per == null){
                 Per = (String) session.getAttribute("Per");
+            }else{
+                session.setAttribute("page","0");
             }
             if(Per != null){
                 perPage = Integer.parseInt(Per);
@@ -345,17 +367,47 @@ public class MoviePage extends HttpServlet{
 
             }
 
+
+            if(order!=null){
+                if(order.equals("year")){
+                    out.println("<h4>Ordering by year descending</h4>");
+                }else if (order.equals("rating")){
+                    out.println("<h4>Ordering by rating descending</h4>");
+                }
+
+            }
+
             //Change number of results per page
+
+
             out.println("<h4>Current results per page: "+ Integer.toString(perPage) + "</h4>");
-            out.println("<form ACTION = \"MovieList\">");
+
+            out.println("<form ACTION = \"MovieList\" class = \"filter\">");
             out.println("<label for=\"Per\">Results per page:</label>");
             out.println("<select name=\"Per\" id=\"Per\">");
+            out.println("<option value=''>Select</option>");
             out.println("<option value='10'>10</option>");
             out.println("<option value='25'>25</option>");
             out.println("<option value='50'>50</option>");
             out.println("<option value='100'>100</option>");
             out.println("</select>");
-            out.println("<input type='submit' value='Refresh'>");
+
+            out.println("<label>Order by Year:</label>");
+            out.println("<select name=\"order\" class=\"order\">");
+            out.println("<option value=''>Select</option>");
+            out.println("<option value='year'>Descending</option>");
+            out.println("<option value='yeard'>Ascending</option>");
+            out.println("</select>");
+
+            out.println("<label>Order by Rating:</label>");
+            out.println("<select name=\"order\" class=\"order\">");
+            out.println("<option value=''>Select</option>");
+            out.println("<option value='rating'>Descending</option>");
+            out.println("<option value='ratingd'>Ascending</option>");
+            out.println("</select>");
+
+
+
             out.println("</form>");
 
 
@@ -466,7 +518,9 @@ public class MoviePage extends HttpServlet{
                 }
                 out.println("</td>");
 
-
+                if(rating == null){
+                    rating = "N/A";
+                }
                 out.println("<td>" + rating + "</td>");
                 out.println("</tr>");
             }

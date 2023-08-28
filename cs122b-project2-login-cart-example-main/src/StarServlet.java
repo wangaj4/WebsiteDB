@@ -168,7 +168,7 @@ public class StarServlet extends HttpServlet {
             while (movieSet.next()){
                 movieid = movieSet.getString("movieId");
                 moviename = movieSet.getString("title");
-                out.println("<a href=\"Movie?id=" + movieid + "&skip=true\"  target = \"_blank\">" + moviename + "</a>");
+                out.println("<a href=\"Movie?id=" + movieid + "&skip=true\">" + moviename + "</a>");
             }
             out.println("</div>");
 

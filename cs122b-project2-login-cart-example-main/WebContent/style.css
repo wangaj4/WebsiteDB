@@ -255,6 +255,30 @@ html, body {
     flex-wrap: wrap;
 }
 
+
+.filter{
+
+}
+
+#Per{
+    padding:0.5rem;
+    border-radius:1rem;
+}
+
+#Per:hover{
+    background-color: lightgray;
+}
+
+.order{
+    padding:0.5rem;
+    border-radius:1rem;
+    text-align: center;
+}
+
+.order:hover{
+    background-color: lightgray;
+}
+
 .select-form {
     padding: 0.5rem;
     border-radius: 3rem;
@@ -366,7 +390,7 @@ html, body {
     background-color: var(--whitesmoke-gray);
     max-height: 5rem;
     min-height:5rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     margin: 1rem;
     flex:1;
     text-align:left;
@@ -399,6 +423,23 @@ html, body {
     padding-right: 10%;
     font-weight: bold;
     color:white;
+}
+
+.cart-checkout{
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: whitesmoke;
+    background-color: #007bff;
+    padding: 0.5rem;
+    text-align: center;
+    width: 9rem;
+    margin: 1rem;
+    border-radius: 0.3rem;
+    margin-left: 8rem;
+}
+
+.cart-checkout:hover{
+    background-color:#0056b3;
 }
 
 .cart-empty{
@@ -447,7 +488,7 @@ html, body {
 }
 
 .cart-form button[type="submit"]:hover {
-    background-color: darkslateblue;
+    background-color: #0056b3;;
 }
 
 
@@ -456,7 +497,7 @@ html, body {
     margin-left: auto;
     margin-right: auto;
     max-width: 45rem;
-    border-radius: 3rem;
+    border-radius: 2rem;
     text-align: left;
     padding: 3rem;
     margin-bottom: 5rem;
@@ -575,6 +616,11 @@ html, body {
 .page-container a{
     text-decoration: none;
     color: royalblue;
+    transition: color 0.2s;
+}
+
+.page-container a:hover{
+    color: hotpink;
 }
 
 
@@ -623,7 +669,7 @@ html, body {
 }
 
 .cart-button:hover {
-    background-color: darkslateblue;
+    background-color: #0056b3;;
     background-position-x: 2rem;
 
 

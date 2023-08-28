@@ -58,7 +58,16 @@ function getCart(){
                     }
                     if(key==="total"){
                         test.className = "cart-ending";
-                        test.textContent= "Total Price: " + value;
+                        test.textContent= "Total Price: $" + value + ".00";
+                        //Link to checkout
+                        let checkout = document.createElement("div");
+                        checkout.className = "cart-checkout";
+                        checkout.textContent = "Proceed to Payment";
+                        checkout.onclick = function(){
+                            window.location.href = "Payment";
+                        }
+                        test.appendChild(checkout);
+
                     }else{
                         test.className = "cart-item";
                         let itemParagraph = document.createElement("label");
@@ -95,11 +104,10 @@ function getCart(){
 
 
                         let costLabel = document.createElement("label");
-                        costLabel.textContent = "Cost: $" + value * 10;
+                        costLabel.textContent = "Cost: $" + value * 10 + ".00";
 
                         test.appendChild(itemParagraph);
                         test.appendChild(options);
-                        //test.appendChild(document.createElement("br"));
                         test.appendChild(costLabel);
                     }
 
@@ -119,4 +127,9 @@ function getCart(){
             console.log(errorData)
         }
     })
+}
+
+
+function paymentPageDetails(){
+
 }
