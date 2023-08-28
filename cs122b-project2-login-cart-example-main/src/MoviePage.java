@@ -215,13 +215,16 @@ public class MoviePage extends HttpServlet{
                 session.setAttribute("page", "0");
             }
             if(order!=null){
-                //If parameter is set, page goes back to 0
-
+                session.setAttribute("order", order);
                 if (order.equals("rating")){
                     query += "ORDER BY rating desc";
-                    session.setAttribute("order", order);
+
                 }else if (order.equals("year")){
                     query += "ORDER BY year desc";
+                }else if (order.equals("yeard")){
+                    query += "ORDER BY year asc";
+                }else if (order.equals("ratingd")){
+                    query += "ORDER BY rating asc";
                 }
             }
 
@@ -370,9 +373,13 @@ public class MoviePage extends HttpServlet{
 
             if(order!=null){
                 if(order.equals("year")){
-                    out.println("<h4>Ordering by year descending</h4>");
+                    out.println("<h4>Ordering by newest first</h4>");
                 }else if (order.equals("rating")){
-                    out.println("<h4>Ordering by rating descending</h4>");
+                    out.println("<h4>Ordering by highest rating first</h4>");
+                }else if (order.equals("yeard")){
+                    out.println("<h4>Ordering by oldest first</h4>");
+                }else if (order.equals("ratingd")){
+                    out.println("<h4>Ordering by lowest rating first</h4>");
                 }
 
             }
@@ -383,6 +390,8 @@ public class MoviePage extends HttpServlet{
             out.println("<h4>Current results per page: "+ Integer.toString(perPage) + "</h4>");
 
             out.println("<form ACTION = \"MovieList\" class = \"filter\">");
+
+            out.println("<span class = \"order-form\">");
             out.println("<label for=\"Per\">Results per page:</label>");
             out.println("<select name=\"Per\" id=\"Per\">");
             out.println("<option value=''>Select</option>");
@@ -391,21 +400,25 @@ public class MoviePage extends HttpServlet{
             out.println("<option value='50'>50</option>");
             out.println("<option value='100'>100</option>");
             out.println("</select>");
+            out.println("</span>");
 
-            out.println("<label>Order by Year:</label>");
+            out.println("<span class = \"order-form\">");
+            out.println("<label>Order by Release:</label>");
             out.println("<select name=\"order\" class=\"order\">");
             out.println("<option value=''>Select</option>");
-            out.println("<option value='year'>Descending</option>");
-            out.println("<option value='yeard'>Ascending</option>");
+            out.println("<option value='year'>Newest</option>");
+            out.println("<option value='yeard'>Oldest</option>");
             out.println("</select>");
+            out.println("</span>");
 
+            out.println("<span class = \"order-form\">");
             out.println("<label>Order by Rating:</label>");
             out.println("<select name=\"order\" class=\"order\">");
             out.println("<option value=''>Select</option>");
-            out.println("<option value='rating'>Descending</option>");
-            out.println("<option value='ratingd'>Ascending</option>");
+            out.println("<option value='rating'>Highest</option>");
+            out.println("<option value='ratingd'>Lowest</option>");
             out.println("</select>");
-
+            out.println("</span>");
 
 
             out.println("</form>");

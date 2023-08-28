@@ -257,12 +257,26 @@ html, body {
 
 
 .filter{
+    margin-top: 3rem;
+    border-top: 1px solid gray;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid gray;
+    display: flex;
+    justify-content: space-around;
+    align-items: self-end;
+}
 
+.order-form{
+    flex-basis: 33%;
+    text-align: center;
 }
 
 #Per{
     padding:0.5rem;
-    border-radius:1rem;
+    border-radius:0.5rem;
+    transition: background-color 0.2s;
+    cursor: pointer;
 }
 
 #Per:hover{
@@ -271,8 +285,10 @@ html, body {
 
 .order{
     padding:0.5rem;
-    border-radius:1rem;
+    border-radius:0.5rem;
     text-align: center;
+    transition: background-color 0.2s;
+    cursor: pointer;
 }
 
 .order:hover{
@@ -508,6 +524,7 @@ html, body {
 
 .results-container{
     padding-left: 10%;
+    padding-right: 10%;
     backdrop-filter: saturate(1.5);
     margin-top: -5rem;
     padding-top: 5rem;
