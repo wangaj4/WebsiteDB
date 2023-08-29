@@ -101,8 +101,8 @@ html, body {
     background-color: #f2f2f2;
 }
 
-.styled-table tbody tr:nth-child(even) {
-    backdrop-filter: invert(10%);
+.styled-table tbody tr:nth-child(even){
+    background-color: rgb(0,0,0,0.1);
 }
 
 
@@ -259,8 +259,6 @@ html, body {
 .filter{
     margin-top: 3rem;
     border-top: 1px solid gray;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
     border-bottom: 1px solid gray;
     display: flex;
     justify-content: space-around;
@@ -273,31 +271,38 @@ html, body {
 }
 
 #Per{
-    padding:0.5rem;
-    border-radius:0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.1rem;
     transition: background-color 0.2s;
     cursor: pointer;
+    border-top: none;
+    border-bottom: none;
+    background-color: rgb(0,0,0,0.1);
+    color: inherit;
 }
 
 #Per:hover{
-    background-color: lightgray;
+    background-color: rgb(0,0,0,0.2);;
 }
 
 .order{
-    padding:0.5rem;
-    border-radius:0.5rem;
-    text-align: center;
+    padding: 0.5rem;
+    border-radius: 0.1rem;
     transition: background-color 0.2s;
     cursor: pointer;
+    border-top: none;
+    border-bottom: none;
+    background-color: rgb(0,0,0,0.1);
+    color:inherit;
 }
 
 .order:hover{
-    background-color: lightgray;
+    background-color: rgb(0,0,0,0.2);;
 }
 
 .select-form {
     padding: 0.5rem;
-    border-radius: 3rem;
+    border-radius: 1rem;
     background-color: whitesmoke;
     flex-basis: 100%;
     transition: all 0.3s;
@@ -513,23 +518,24 @@ html, body {
     margin-left: auto;
     margin-right: auto;
     max-width: 45rem;
-    border-radius: 2rem;
+    border-radius: 1rem;
     text-align: left;
     padding: 3rem;
     margin-bottom: 5rem;
     transition: background-color 0.4s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    backdrop-filter: saturate(1.5);
+    background-color: rgb(255,255,255,0.8);
 }
 
 .results-container{
     padding-left: 10%;
     padding-right: 10%;
-    backdrop-filter: saturate(1.5);
     margin-top: -5rem;
     padding-top: 5rem;
     padding-bottom: 3rem;
-    box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.3);
+
+
+    text-align: center;
 
 }
 

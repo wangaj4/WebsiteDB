@@ -352,21 +352,20 @@ public class MoviePage extends HttpServlet{
 
             out.println("<div class = \"results-container\">");
 
-            out.println("<h1>Found Movies</h1>");
 
             //Display active filters
             if(Genre != null){
-                out.println("<h4>Showing Movies with Genre: "+ Genre + "</h4>");
+                out.println("<h2>Movies with Genre: "+ Genre + "</h4>");
             }
             else if(Title != null){
-                out.println("<h4>Showing Movies with Title: \""+ Title + "\"</h4>");
+                out.println("<h2>Movies with Title: \""+ Title + "\"</h4>");
             }
             else if(Director != null){
-                out.println("<h4>Showing Movies with Director: \""+ Director + "\"</h4>");
+                out.println("<h2>Movies with Director: \""+ Director + "\"</h4>");
 
             }
             else if(Full != null){
-                out.println("<h4>Showing Movies with Keywords: \""+ Full + "\"</h4>");
+                out.println("<h2>Movies with Keywords: \""+ Full + "\"</h4>");
 
             }
 
