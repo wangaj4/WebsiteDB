@@ -58,16 +58,16 @@ public class LoginServlet extends HttpServlet {
             Connection dbCon = dataSource.getConnection();
 
 
-//            if (gRecaptchaResponse == null || gRecaptchaResponse.isEmpty()) {
-//                responseJsonObject.addProperty("status", "fail");
-//                responseJsonObject.addProperty("message", "error: Input Captcha");
-//                response.getWriter().write(responseJsonObject.toString());
-//                return;
-//            }
+            if (gRecaptchaResponse == null || gRecaptchaResponse.isEmpty()) {
+                responseJsonObject.addProperty("status", "fail");
+                responseJsonObject.addProperty("message", "error: Input Captcha");
+                response.getWriter().write(responseJsonObject.toString());
+                return;
+            }
 
             if(username.length()==0 || password.length()==0){
                 responseJsonObject.addProperty("status", "fail");
-                responseJsonObject.addProperty("message", "Please fill in both fields   ");
+                responseJsonObject.addProperty("message", "Please fill in both fields");
                 response.getWriter().write(responseJsonObject.toString());
                 return;
             }

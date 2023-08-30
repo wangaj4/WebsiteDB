@@ -73,7 +73,7 @@ public class MoviePage extends HttpServlet{
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
-        out.println("    <title>FlickBase Search</title>");
+        out.println("    <title>FlickBase Results</title>");
         out.println("    <link rel=\"stylesheet\" href=\"style.css\">");
         out.println("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
         out.println("    <!-- jQuery is required -->");
