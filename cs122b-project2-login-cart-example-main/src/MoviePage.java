@@ -352,20 +352,7 @@ public class MoviePage extends HttpServlet{
 
             out.println("</div>");
 
-            out.println("<div class = \"table-container darken\">");
-            out.println("<table border class = \"styled-table\" >");
 
-            // Add table header row
-            {
-                out.println("<tr>");
-                out.println("<th>Title</a></th>");
-                out.println("<th>Year</th>");
-                out.println("<th>Director</th>");
-                out.println("<th>Genres</th>");
-                out.println("<th>Stars</th>");
-                out.println("<th>Rating</th>");
-                out.println("</tr>");
-            }
 
             int onpage = 0;
 
@@ -427,8 +414,28 @@ public class MoviePage extends HttpServlet{
 
 
             // Add a row for every movie result
-            while (resultSet.next()) {
 
+
+            out.println("<div class = \"table-container darken\">");
+
+            while (resultSet.next()) {
+                if (onpage == 0) {
+
+                    out.println("<table border class = \"styled-table\" >");
+
+                    // Add table header row
+                    {
+                        out.println("<tr>");
+                        out.println("<th>Title</a></th>");
+                        out.println("<th>Year</th>");
+                        out.println("<th>Director</th>");
+                        out.println("<th>Genres</th>");
+                        out.println("<th>Stars</th>");
+                        out.println("<th>Rating</th>");
+                        out.println("</tr>");
+                    }
+
+                }
 
 
                 onpage += 1;
@@ -482,8 +489,7 @@ public class MoviePage extends HttpServlet{
             }
 
             if(onpage==0){
-                out.println("</table>");
-                out.println("<p>No results found</p>");
+                out.println("<h3>No results found</h3>");
             }
 
 
