@@ -52,8 +52,6 @@ public class LoginServlet extends HttpServlet {
         try{
 
 
-            // Create a new connection to database
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
             // create database connection
             Connection dbCon = dataSource.getConnection();
 
