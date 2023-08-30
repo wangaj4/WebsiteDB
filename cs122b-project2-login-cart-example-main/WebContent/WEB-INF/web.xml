@@ -15,6 +15,7 @@
     </resource-ref>
 
 
+    <!--
     <security-constraint>
 
         <web-resource-collection>
@@ -26,7 +27,7 @@
         </user-data-constraint>
 
     </security-constraint>
-
+    -->
 
 
 </web-app>
