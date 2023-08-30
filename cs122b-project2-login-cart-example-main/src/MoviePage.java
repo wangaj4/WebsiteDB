@@ -177,18 +177,22 @@ public class MoviePage extends HttpServlet{
 
 
 
+            String par = "";
 
             if(Director != null && !Director.equals("")){
-                query += " AND movies.director LIKE '%" + Director + "%'";
+                query += " AND movies.director LIKE ?";
+                par = "%" + Director + "%";
                 session.setAttribute("Director", Director);
             }else if(Title != null && !Title.equals("")){
-                query += " AND movies.title LIKE '%" + Title + "%'";
+                query += " AND movies.title LIKE ?";
+                par = "%" + Title + "%";
                 session.setAttribute("Title", Title);
             }else if(Genre != null && !Genre.equals("")){
                 query = "SELECT m.id, m.title, m.year, m.director, r.rating FROM movies m left join ratings r on m.id = r.movieId, " +
                         "genres, genres_in_movies WHERE genres.id = genres_in_movies.genreId " +
                         "AND genres_in_movies.movieId = m.id " +
-                        "AND genres.name = '" + Genre + "'";
+                        "AND genres.name = ?";
+                par = Genre;
                 session.setAttribute("Genre", Genre);
             }else if(Full != null && !Full.equals("")){
 
@@ -272,6 +276,8 @@ public class MoviePage extends HttpServlet{
             PreparedStatement statement = connection.prepareStatement(query);
             if(fts){
                 statement.setString(1,fullTextSearch.trim());
+            }else if (!par.equals("")){
+                statement.setString(1,par);
             }
 
             ResultSet resultSet = statement.executeQuery();
@@ -297,8 +303,8 @@ public class MoviePage extends HttpServlet{
             }
 
 
-            String displayYear = "select";
-            String displayRating = "select";
+            String displayYear = "Select";
+            String displayRating = "Select";
             if(order!=null){
                 if(order.equals("year")){
                     displayYear = "Newest";
