@@ -34,6 +34,10 @@ public class PaymentPage extends HttpServlet {
         out.println("</head>");
         out.println("<body>");
 
+//        out.println("    <script>");
+//        out.println("        alert('Do not enter any information! This is NOT a real checkout page');");
+//        out.println("    </script>");
+
         out.println("    <div id=\"back\" class=\"cover font\">");
 
         out.println("        <div class=\"navbar darken\" id=\"navbar\">");
@@ -96,31 +100,87 @@ public class PaymentPage extends HttpServlet {
             CartList cart = (CartList) session.getAttribute("cart");
 
 
-                out.println("<h1>Payment Page</h1>");
+            out.println("<div class = 'split'>");
+            out.println("<div class = 'split-page'>");
+            out.println("<div class = 'display-contents darken'>");
+                out.println("<h1>Checkout</h1>");
                 int totalPrice = 0;
                 for (MovieInCart item : cart.getCart()) {
+                    out.println("<div class = 'confirm-item'>");
+                    out.println("<p style = 'font-weight:bold'>" + item.getName() + " * " + item.getCount() + "</p>");
+                    out.println("<p>$" + item.getCount() * item.getPrice() + ".00</p>");
+                    out.println("</div>");
+
+
                     totalPrice += item.getPrice() * item.getCount();
+
+
                 }
-                out.println("<h2>Total Price: " + totalPrice + "</h2>");
+                out.println("<h2>Subtotal: $" + totalPrice + ".00</h2>");
+            out.println("<div class=\"shipping-form darken\">");
+            out.println("<h3>Shipping Information</h3>");
+            out.println("<div class=\"form-group\">");
+            out.println("<input name='first' placeholder='First Name' type='text' class = 'shipping-info'><br>");
+            out.println("</div>");
+
+            out.println("<div class=\"form-group\">");
+            out.println("<input name='last' placeholder='Last Name' type='text' class = 'shipping-info'><br>");
+            out.println("</div>");
+
+            out.println("<div class=\"form-group\">");
+            out.println("<input name='address' placeholder='Address' type='text' class = 'shipping-info'><br>");
+            out.println("</div>");
+
+            out.println("<div class=\"form-group-half\">");
+            out.println("<input name='zip' placeholder='ZIP Code' type='text' class = 'shipping-info-half'><br>");
+            out.println("</div>");
+
+            out.println("<div class=\"form-group-half\">");
+            out.println("<input name='state' placeholder='State' type='text' class = 'shipping-info-half'><br>");
+            out.println("</div>");
 
 
+            out.println("<div class='coverup'></div>");
 
-            out.println("<form method='post' action=Order>");
+            out.println("</div>");
 
+            out.println("</div>");
+            out.println("</div>");
+
+            out.println("<div class = 'split-page'>");
+            out.println("<div class=\"payment-form darken\">");
+
+            out.println("<div class=\"form-group\">");
             out.println("<label><b>Card Holder First Name</b></label>");
-            out.println("<label><input name='first' placeholder='Enter' type='text'></label><br>");
+            out.println("<input name='first' placeholder='Enter' type='text' class = 'payment-info'><br>");
+            out.println("</div>");
 
+            out.println("<div class=\"form-group\">");
             out.println("<label><b>Card Holder Last Name</b></label>");
-            out.println("<label><input name='last' placeholder='Enter' type='text'></label><br>");
+            out.println("<input name='last' placeholder='Enter' type='text' class = 'payment-info'><br>");
+            out.println("</div>");
 
+            out.println("<div class=\"form-group\">");
             out.println("<label><b>Card Number</b></label>");
-            out.println("<label><input name='num' placeholder='Enter' type='text'></label><br>");
+            out.println("<input name='num' placeholder='Enter' type='text' class = 'payment-info'><br>");
+            out.println("</div>");
 
+            out.println("<div class=\"form-group\">");
             out.println("<label><b>Expiration Date</b></label>");
-            out.println("<label><input name='date' placeholder='YYYY/MM/DD' type='text'></label><br>");
+            out.println("<input name='date' placeholder='YYYY/MM/DD' type='text' class = 'payment-info'><br>");
+            out.println("</div>");
 
-            out.println("<input type='submit' value='Place Order'>");
-            out.println("</form>");
+            out.println("<div style='text-align:center;'>");
+            out.println("<input type='submit' value='Place Order' class = 'payment-button'>");
+            out.println("</div>");
+
+            out.println("<div class='coverup'></div>");
+
+            out.println("</div>");
+
+            out.println("</div>");
+
+            out.println("</div>");
 
 
             out.println("</body>");
