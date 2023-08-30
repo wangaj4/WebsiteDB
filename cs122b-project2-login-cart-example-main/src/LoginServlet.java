@@ -147,10 +147,8 @@ public class LoginServlet extends HttpServlet {
         }
         catch(Exception e){
             request.getServletContext().log("Error: ", e);
-
-            // Output Error Message to html
-            out.println(String.format("<html><head><title>CAPTCHA: Error</title></head>\n<body><p>SQL error in doGet: %s</p></body></html>", e.getMessage()));
-            return;
+            responseJsonObject.addProperty("status", "fail");
+            responseJsonObject.addProperty("message", "error:" + e);
         }
 
 
