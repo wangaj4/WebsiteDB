@@ -277,8 +277,6 @@ public class MoviePage extends HttpServlet{
             ResultSet resultSet = statement.executeQuery();
 
 
-            out.println("<body>");
-
             out.println("<div class = \"results-container\">");
 
 
@@ -430,6 +428,9 @@ public class MoviePage extends HttpServlet{
 
             // Add a row for every movie result
             while (resultSet.next()) {
+
+
+
                 onpage += 1;
                 // get a movie from result set
                 String movieid = resultSet.getString("id");
@@ -480,11 +481,15 @@ public class MoviePage extends HttpServlet{
                 out.println("</tr>");
             }
 
+            if(onpage==0){
+                out.println("</table>");
+                out.println("<p>No results found</p>");
+            }
+
 
             out.println("</table>");
 
             out.println("</div>");
-            out.println("</body>");
 
 
             out.println("<div class = \"page-container\">");
