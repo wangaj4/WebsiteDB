@@ -149,6 +149,7 @@ public class LoginServlet extends HttpServlet {
             request.getServletContext().log("Error: ", e);
             responseJsonObject.addProperty("status", "fail");
             responseJsonObject.addProperty("message", "error:" + e);
+            response.getWriter().write(responseJsonObject.toString());
         }
 
 
