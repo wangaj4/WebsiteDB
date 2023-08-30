@@ -186,6 +186,7 @@ public class StarServlet extends HttpServlet {
             out.println("</p>");
 
         }
+        out.println("<script src=\"./toggle.js\"></script>");
 
         out.println("        <div class=\"navbar-spacer\"></div>");
 
@@ -194,7 +195,6 @@ public class StarServlet extends HttpServlet {
         out.println("        </div>");
         out.println("    </div>");
         out.println("<script src=\"./index.js\"></script>");
-        out.println("<script src=\"./toggle.js\"></script>");
         out.println("<script src=\"./select.js\"></script>");
         out.println("<script src=\"./navbarToggle.js\"></script>");
         out.println("<script src=\"./cart.js\"></script>");

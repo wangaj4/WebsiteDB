@@ -16,19 +16,29 @@ const movieGrid = document.querySelectorAll('.movie_grid');
 let r = document.querySelector(':root');
 
 $(document).ready(function() {
+
+    console.log("darkening");
+
+    cover.style.display = "none";
+    dark()
+
+    setTimeout(() => {
+        cover.style.display = "block";
+    }, 20);
+
     jQuery.ajax({
         "method": "GET",
         "url": "api/darkmode?get=true",
         "success": function(data) {
-            if(data==="true"){
-                console.log("darkening");
+            if(data!=="true"){
+                console.log("lightening");
 
                 cover.style.display = "none";
-                dark()
+                light()
 
                 setTimeout(() => {
                     cover.style.display = "block";
-                }, 60);
+                }, 20);
 
 
             }

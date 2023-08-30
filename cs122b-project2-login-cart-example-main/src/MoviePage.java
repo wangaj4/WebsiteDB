@@ -86,7 +86,6 @@ public class MoviePage extends HttpServlet{
         out.println("<body>");
 
         out.println("    <div id=\"back\" class=\"cover font\">");
-
         out.println("        <div class=\"navbar darken\" id=\"navbar\">");
         out.println("            <div class=\"navbar-toggle\">");
         out.println("                <span class=\"bar\"></span>");
@@ -522,6 +521,7 @@ public class MoviePage extends HttpServlet{
             out.println("Exception in doGet: " + e.getMessage());
             out.println("</p>");
         }
+        out.println("<script src=\"./toggle.js\"></script>");
 
         out.println("        <div class=\"navbar-spacer\"></div>");
 
@@ -530,7 +530,6 @@ public class MoviePage extends HttpServlet{
         out.println("        </div>");
         out.println("    </div>");
         out.println("<script src=\"./index.js\"></script>");
-        out.println("<script src=\"./toggle.js\"></script>");
         out.println("<script src=\"./select.js\"></script>");
         out.println("<script src=\"./navbarToggle.js\"></script>");
         out.println("<script src=\"./cart.js\"></script>");
