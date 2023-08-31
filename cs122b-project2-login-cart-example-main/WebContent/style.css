@@ -72,6 +72,7 @@ html, body {
     text-align: center;
     justify-content: center;
     background-color: rgb(255,255,255,0.8);
+    display: flex;
 }
 
 .styled-table {
@@ -266,7 +267,7 @@ html, body {
 }
 
 .order-form{
-    flex-basis: 33%;
+    flex-basis: 30%;
     text-align: center;
 }
 
