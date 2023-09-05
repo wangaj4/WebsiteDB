@@ -17,7 +17,7 @@ let r = document.querySelector(':root');
 
 $(document).ready(function() {
 
-
+    cover.style.display = "none";
 
     jQuery.ajax({
         "method": "GET",
@@ -25,16 +25,12 @@ $(document).ready(function() {
         "success": function(data) {
             if(data==="true"){
                 console.log("lightening");
-
-                cover.style.display = "none";
                 dark()
-
-                setTimeout(() => {
-                    cover.style.display = "block";
-                }, 20);
-
-
             }
+
+            setTimeout(() => {
+                cover.style.display = "block";
+            }, 20);
 
         },
         "error": function(errorData) {
