@@ -30,7 +30,7 @@ $(document).ready(function() {
 
             setTimeout(() => {
                 cover.style.display = "block";
-            }, 20);
+            }, 10);
 
         },
         "error": function(errorData) {
