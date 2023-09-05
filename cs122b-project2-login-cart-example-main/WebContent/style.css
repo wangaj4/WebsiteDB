@@ -1075,6 +1075,10 @@ html, body {
 
 @media(max-width:864px){
 
+    .search-container{
+        margin:0.5rem;
+    }
+
     .split-page{
         flex-basis:100%;
     }
@@ -1089,6 +1093,17 @@ html, body {
         border-radius:0;
         border-bottom-left-radius: 0.5rem;
         border-bottom-right-radius: 0.5rem;
+    }
+
+    .styled-table{
+        table-layout: fixed;
+        width: 100%;
+    }
+
+
+    .styled-table th,
+    .styled-table td {
+        padding: 0.5rem 0.1rem;
     }
 
     .table-container{
