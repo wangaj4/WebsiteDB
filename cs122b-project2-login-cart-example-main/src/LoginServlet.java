@@ -53,6 +53,7 @@ public class LoginServlet extends HttpServlet {
 
 
             // create database connection
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
             Connection dbCon = dataSource.getConnection();
 
 
