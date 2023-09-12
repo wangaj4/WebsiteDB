@@ -359,8 +359,16 @@ public class MoviePage extends HttpServlet{
             out.println("</div>");
 
 
-
             int onpage = 0;
+
+            out.println("<div class = \"page-container\">");
+            int curr = Integer.parseInt(Page);
+            int displayedPage = curr+1;
+            out.println("<h4>Page: " + displayedPage + "</h4>");
+
+            out.println("</div>");
+
+
 
 
             //Get genres from database
@@ -505,8 +513,8 @@ public class MoviePage extends HttpServlet{
 
 
             out.println("<div class = \"page-container\">");
-            int curr = Integer.parseInt(Page);
-            int displayedPage = curr+1;
+            curr = Integer.parseInt(Page);
+            displayedPage = curr+1;
             out.println("<h4>Page: " + displayedPage + "</h4>");
 
 
