@@ -36,6 +36,9 @@ $(document).ready(function() {
         "error": function(errorData) {
             console.log("get current error")
             console.log(errorData)
+            setTimeout(() => {
+                cover.style.display = "block";
+            }, 10);
         }
     })
 
