@@ -1,12 +1,5 @@
-### Features
-1. This example application allows you to login with the username and password provided above.
-2. When you land on the welcome page, it will show your current session ID and last access time. 
-3. It also simulates a shopping cart feature. When you type in items that you want to store in the current session and then click `add`, the web page will show a list of items that consist of your previous items, and the one you just added. When you refresh the page and add more items, the list that the web page shows will contain all the items that you have added to the list in this session. 
-
-### Brief Explanation
-
-- The default username is `anteater` and password is `123456` .
-
+### WebContent
+  The WebContent directory contains all the html, javascript, and css of this database project
 - [login.html](WebContent/login.html) contains the login form. In the `form` tag with `id=login_form`, the action is disabled so that we can implement our own logic with the `submit` event. It also includes jQuery and `login.js`.
 
 
@@ -14,7 +7,9 @@
   - The statement `login_form.submit(submitLoginForm)` sets up an event listener for the form `submit` action and binds the action to the `submitLoginForm` function. 
   - The `submitLoginForm` function disables the default form action and sends HTTP POST requests to the backend.
   - The `handleLoginResult` function parses the JSON data that is sent from the backend. If login is successful, 'login.js' redirects to the 'index.html' page. If login fails, it shows appropriate error messages.
-
+    
+### src
+  The src directory contains java servlets used for the backend
 
 - [LoginServlet.java](src/LoginServlet.java) handles the login requests. It contains the following functionalities:
   - It gets the username and password from the parameters.
